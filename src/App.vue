@@ -5,16 +5,7 @@ import HelloWorld from './components/HelloWorld.vue'
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
+    <!-- Hier kun je een navigatiebalk of logo plaatsen -->
   </header>
 
   <RouterView />
@@ -23,7 +14,8 @@ import HelloWorld from './components/HelloWorld.vue'
 <style scoped>
 header {
   line-height: 1.5;
-  max-height: 100vh;
+  max-width: 100%;
+  padding: 0;
 }
 
 .logo {
