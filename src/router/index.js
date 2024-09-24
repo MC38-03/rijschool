@@ -3,6 +3,8 @@ import HomeView from '../views/HomeView.vue'
 import Tarieven from '@/views/TarievenView.vue'
 import About from '@/components/About.vue'
 import Register from '@/components/Register.vue'
+import Contact from '@/components/Contact.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -23,9 +25,16 @@ const router = createRouter({
       component: Tarieven
     },
     {
+
       path: '/register',
       name: 'register',
       component: Register
+    },
+    {
+      path: '/contact',
+      name: 'contact',
+      component: Contact
+
     }
   ]
 })

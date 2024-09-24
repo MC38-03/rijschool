@@ -42,7 +42,7 @@ import { RouterLink, RouterView } from 'vue-router'
 
 header {
   width: 100%;
-  background-color: #3f51b5;
+  background-color: #EF1A2D;
   padding: 10px 20px;
   position: fixed;
   top: 0;
@@ -88,10 +88,15 @@ header {
   border-radius: 5px;
 }
 
+
 .nav-links a:hover,
 .new-link-left a:hover,
 .new-link-right a:hover {
   background-color: #283593;
+}
+.nav-links a:hover {
+  background-color: #810303;
+
 }
 
 body {
