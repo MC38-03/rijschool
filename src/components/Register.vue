@@ -37,10 +37,12 @@ export default {
         async registerUser() {
             try {
                 // Ensure the CSRF token is fetched from '/sanctum/csrf-cookie'
-                
+                await api.get('/sanctum/csrf-cookie');
 
                 // Proceed with the registration request
-                const response = await api.post('/register', this.user);
+                const response = await api.post('/register', this.user, {
+                    withCredentials: true
+                });
                 console.log('Registration successful', response.data);
                 alert('Registration successful');
             } catch (error) {
