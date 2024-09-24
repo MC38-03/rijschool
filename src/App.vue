@@ -5,6 +5,10 @@ import { RouterLink, RouterView } from 'vue-router'
 <template>
   <header>
     <nav class="navbar">
+
+      <div class="new-link-left">
+      </div>
+
       <div class="nav-links">
         <div class="nav-buttons-left">
           <RouterLink to="/">Home</RouterLink>
@@ -18,6 +22,11 @@ import { RouterLink, RouterView } from 'vue-router'
           <RouterLink to="/contact">Contact</RouterLink>
         </div>
       </div>
+      
+
+      <div class="new-link-right">
+        <RouterLink to="/register">Login/Register</RouterLink>
+      </div>
     </nav>
   </header>
 
@@ -25,6 +34,12 @@ import { RouterLink, RouterView } from 'vue-router'
 </template>
 
 <style scoped>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 header {
   width: 100%;
   background-color: #3f51b5;
@@ -38,28 +53,33 @@ header {
 
 .navbar {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
+  width: 100%;
+  padding: 0 20px;
 }
 
-.logo {
+.nav-links {
   display: flex;
-  flex-direction: row;
   align-items: center;
+  gap: 20px;
+  flex: 1;
+  justify-content: center;
 }
 
 .logo img {
   height: 65px;
 }
 
-.nav-links {
+.new-link-left,
+.new-link-right {
   display: flex;
-  gap: 20px;
+  align-items: center;
 }
 
-.nav-links a {
+.nav-links a,
+.new-link-left a,
+.new-link-right a {
   color: white;
   text-decoration: none;
   font-weight: bold;
@@ -68,23 +88,13 @@ header {
   border-radius: 5px;
 }
 
-.nav-links a:hover {
+.nav-links a:hover,
+.new-link-left a:hover,
+.new-link-right a:hover {
   background-color: #283593;
 }
 
 body {
   padding-top: 70px;
-}
-
-.nav-buttons-left {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.nav-buttons-right {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
 }
 </style>
