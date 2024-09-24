@@ -93,7 +93,7 @@ header {
 .new-link-left a:hover,
 .new-link-right a:hover {
   background-color: #283593;
-=======
+}
 .nav-links a:hover {
   background-color: #810303;
 
