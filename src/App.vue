@@ -27,7 +27,7 @@ import { RouterLink, RouterView } from 'vue-router'
 <style scoped>
 header {
   width: 100%;
-  background-color: #3f51b5;
+  background-color: #EF1A2D;
   padding: 10px 20px;
   position: fixed;
   top: 0;
@@ -69,7 +69,7 @@ header {
 }
 
 .nav-links a:hover {
-  background-color: #283593;
+  background-color: #810303;
 }
 
 body {
