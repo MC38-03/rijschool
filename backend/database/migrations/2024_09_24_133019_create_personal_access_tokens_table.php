@@ -15,19 +15,16 @@ return new class extends Migration {
             $table->string('gebruikersnaam')->unique();
             $table->string('naam');
             $table->string('achternaam');
-            $table->integer('leeftijd');
+            $table->date('geboortedatum'); 
             $table->string('email')->unique();
             $table->string('wachtwoord');
             $table->timestamps();
         });
-
     }
 
-    /**
-     * Reverse the migrations.
-     */
+
     public function down(): void
     {
-        Schema::dropIfExists('personal_access_tokens');
+        Schema::dropIfExists('leerling');
     }
 };

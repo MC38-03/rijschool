@@ -13,7 +13,7 @@ class Leerling extends Authenticatable
     protected $table = 'leerling';
 
     protected $fillable = [
-        'gebruikersnaam', 'naam', 'achternaam', 'leeftijd', 'email', 'wachtwoord',
+        'gebruikersnaam', 'naam', 'achternaam', 'geboortedatum', 'email', 'wachtwoord',
     ];
 
     protected $hidden = [

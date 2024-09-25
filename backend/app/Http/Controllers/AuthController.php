@@ -6,6 +6,7 @@ use App\Models\Leerling;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Carbon\Carbon;
 
 class AuthController extends Controller
 {
@@ -15,7 +16,16 @@ class AuthController extends Controller
             'gebruikersnaam' => 'required|string|max:255|unique:leerling',
             'naam' => 'required|string|max:255',
             'achternaam' => 'required|string|max:255',
-            'leeftijd' => 'required|integer|min:16',
+            'geboortedatum' => [
+                'required',
+                'date',
+                function ($attribute, $value, $fail) {
+                    $minimumAge = Carbon::now()->subYears(16)->subMonths(6);
+                    if (Carbon::parse($value)->greaterThan($minimumAge)) {
+                        $fail('You must be at least 16.5 years old to register.');
+                    }
+                },
+            ],
             'email' => 'required|string|email|max:255|unique:leerling',
             'wachtwoord' => 'required|string|min:8|confirmed',
         ]);
@@ -24,7 +34,7 @@ class AuthController extends Controller
             'gebruikersnaam' => $request->gebruikersnaam,
             'naam' => $request->naam,
             'achternaam' => $request->achternaam,
-            'leeftijd' => $request->leeftijd,
+            'geboortedatum' => $request->geboortedatum,
             'email' => $request->email,
             'wachtwoord' => Hash::make($request->wachtwoord),
         ]);
@@ -38,14 +48,14 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'gebruikersnaam' => 'required|string',
             'wachtwoord' => 'required|string',
         ]);
 
-        $leerling = Leerling::where('gebruikersnaam', $request->gebruikersnaam)->first();
+        $leerling = Leerling::where('gebruikersnaam', $validatedData['gebruikersnaam'])->first();
 
-        if (! $leerling || ! Hash::check($request->wachtwoord, $leerling->wachtwoord)) {
+        if (!$leerling || !Hash::check($validatedData['wachtwoord'], $leerling->wachtwoord)) {
             throw ValidationException::withMessages([
                 'gebruikersnaam' => ['The provided credentials are incorrect.'],
             ]);

@@ -5,10 +5,10 @@
             <input v-model="user.gebruikersnaam" type="text" placeholder="Gebruikersnaam" />
             <input v-model="user.naam" type="text" placeholder="Naam" />
             <input v-model="user.achternaam" type="text" placeholder="Achternaam" />
-            <input v-model="user.leeftijd" type="number" placeholder="Leeftijd" />
+            <input v-model="user.geboortedatum" type="date" placeholder="geboortedatum" />
             <input v-model="user.email" type="email" placeholder="Email" />
             <input v-model="user.wachtwoord" type="password" placeholder="Wachtwoord" />
-            <input v-model="user.wachtwoord_confirmation" type="password" placeholder="Confirm Wachtwoord" />
+            <input v-model="user.wachtwoord_confirmation" type="password" placeholder="Bevestig wachtwoord" />
             <button type="submit" class="submit-btn">Register</button>
         </form>
         <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
@@ -22,13 +22,13 @@ export default {
     data() {
         return {
             user: {
-                gebruikersnaam: 'test',
-                naam: 'test',
-                achternaam: 'test',
-                leeftijd: '32',
-                email: 'test@gmail.com',
-                wachtwoord: 'test123',
-                wachtwoord_confirmation: 'test123',
+                gebruikersnaam: '',
+                naam: '',
+                achternaam: '',
+                geboortedatum: '',
+                email: '',
+                wachtwoord: '',
+                wachtwoord_confirmation: '',
             },
             errorMessage: null,
         };
@@ -36,11 +36,11 @@ export default {
     methods: {
         async registerUser() {
             try {
-                // Ensure the CSRF token is fetched from '/sanctum/csrf-cookie'
-                await api.get('/sanctum/csrf-cookie');
-
-                // Proceed with the registration request
-                const response = await api.post('/register', this.user, {
+                const formattedUser = {
+                    ...this.user,
+                    geboortedatum: new Date(this.user.geboortedatum).toISOString().split('T')[0],
+                };
+                const response = await api.post('/register', formattedUser, {
                     withCredentials: true
                 });
                 console.log('Registration successful', response.data);
@@ -58,50 +58,54 @@ export default {
 };
 </script>
 
-
 <style scoped>
 .register-container {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
     background-color: #f7f7f7;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-    text-align: center;
-    color: #333;
-    font-size: 24px;
-    margin-bottom: 20px;
 }
 
 .register-form {
-    display: flex;
-    flex-direction: column;
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
 }
 
-.register-form input {
+h1 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+input {
+    width: 100%;
     padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
     font-size: 16px;
 }
 
-.register-form input:focus {
+input:focus {
     border-color: #007bff;
     outline: none;
 }
 
 .submit-btn {
-    padding: 10px 15px;
+    width: 100%;
+    padding: 10px;
     background-color: #007bff;
-    color: #fff;
+    color: white;
     border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    border-radius: 5px;
     font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .submit-btn:hover {
@@ -110,7 +114,7 @@ h1 {
 
 .error-message {
     color: red;
-    text-align: center;
     margin-top: 15px;
+    font-size: 14px;
 }
 </style>
