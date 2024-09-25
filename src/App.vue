@@ -5,10 +5,8 @@ import { RouterLink, RouterView } from 'vue-router'
 <template>
   <header>
     <nav class="navbar">
-
       <div class="new-link-left">
       </div>
-
       <div class="nav-links">
         <div class="nav-buttons-left">
           <RouterLink to="/">Home</RouterLink>
@@ -22,14 +20,17 @@ import { RouterLink, RouterView } from 'vue-router'
           <RouterLink to="/contact">Contact</RouterLink>
         </div>
       </div>
-      
-
       <div class="new-link-right">
-        <RouterLink to="/register">Login/Register</RouterLink>
+        <div class="dropdown">
+          <button class="dropdown-btn">Login/Register</button>
+          <div class="dropdown-content">
+            <RouterLink to="/login">Login</RouterLink>
+            <RouterLink to="/register">Register</RouterLink>
+          </div>
+        </div>
       </div>
     </nav>
   </header>
-
   <RouterView />
 </template>
 
@@ -88,18 +89,67 @@ header {
   border-radius: 5px;
 }
 
-
 .nav-links a:hover,
 .new-link-left a:hover,
 .new-link-right a:hover {
   background-color: #283593;
 }
+
 .nav-links a:hover {
   background-color: #810303;
-
 }
 
 body {
-  padding-top: 70px;
+  padding-top: 70px; /* Adjust this to be the height of the navbar */
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-btn {
+  background-color: #EF1A2D;
+  color: white;
+  padding: 10px 15px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.dropdown-btn:hover {
+  background-color: #810303;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 100%;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  top: 100%;
+  left: 0;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropdown-btn {
+  background-color: #810303;
 }
 </style>
