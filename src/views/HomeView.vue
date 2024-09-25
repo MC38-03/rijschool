@@ -3,8 +3,9 @@
     <div class="ferrari">
       <Home_Ferrari />
     </div>
-    <div class="contact_page">
-      <Contact_Page />
+    <div class="card-container">
+      <ProeflesForm />
+      <InformatieHomepagina />
     </div>
   </div>
 
@@ -12,11 +13,14 @@
 
 <script>
 import Home_Ferrari from '../components/Home_Ferrari.vue'
-import Contact_Page from '../components/Contact.vue'
+import ProeflesForm from '../components/ProeflesForm.vue';
+import InformatieHomepagina from '../components/InformatieHomepagina.vue';
+
 export default {
   components: {
     Home_Ferrari,
-    Contact_Page
+    ProeflesForm,
+    InformatieHomepagina
   }
 }
 </script>
@@ -24,15 +28,18 @@ export default {
 <style>
 .homepage {
   display: flex;
-  flex-direction: column; 
-  align-items: center; 
-  height: 100%; 
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
   min-height: 100vh;
 }
 
-.ferrari, .contact_page {
-  width: 100%; 
-  flex-grow: 1; /* Ekran boşluğunu eşit şekilde doldur */
+.card-container{
+  display: flex;
+  flex-direction: row;
 }
-
+.ferrari, .contact_page {
+  width: 100%;
+  flex-grow: 1;
+}
 </style>
