@@ -20,6 +20,11 @@ class Leerling extends Authenticatable
         'wachtwoord', 'remember_token',
     ];
 
+    protected $middleware = [
+        \Fruitcake\Cors\HandleCors::class,
+    ];
+    
+
     public function casts(): array
     {
         return [

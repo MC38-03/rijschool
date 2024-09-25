@@ -12,6 +12,7 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
+        // Validation with minimum age check
         $request->validate([
             'gebruikersnaam' => 'required|string|max:255|unique:leerling',
             'naam' => 'required|string|max:255',
@@ -30,6 +31,7 @@ class AuthController extends Controller
             'wachtwoord' => 'required|string|min:8|confirmed',
         ]);
 
+        // Create new student (leerling)
         $leerling = Leerling::create([
             'gebruikersnaam' => $request->gebruikersnaam,
             'naam' => $request->naam,
@@ -48,6 +50,7 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        // Validate login input
         $validatedData = $request->validate([
             'gebruikersnaam' => 'required|string',
             'wachtwoord' => 'required|string',
@@ -61,20 +64,42 @@ class AuthController extends Controller
             ]);
         }
 
-        $token = $leerling->createToken('auth-token')->plainTextToken;
+        $token = $leerling->tokens()->where('name', 'auth-token')->first();
+        if (!$token) {
+            // Create a new token if none exists
+            $token = $leerling->createToken('auth-token')->plainTextToken;
+        }
 
-        return response()->json(['token' => $token], 200)
-            ->header('Access-Control-Allow-Origin', 'http://localhost:5173')
-            ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
-            ->header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With')
-            ->header('Access-Control-Allow-Credentials', 'true');
+        return response()->json([
+            'token' => $token,
+            'user' => [
+                'gebruikersnaam' => $leerling->gebruikersnaam,
+                'naam' => $leerling->naam,
+                'achternaam' => $leerling->achternaam,
+                'geboortedatum' => $leerling->geboortedatum,
+                'email' => $leerling->email
+            ]
+        ], 200)
+        ->header('Access-Control-Allow-Origin', 'http://localhost:5173')
+        ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+        ->header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With')
+        ->header('Access-Control-Allow-Credentials', 'true');
     }
 
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
-
-        return response()->json(['message' => 'Logout successful'], 200)
+        $user = $request->user();
+    
+        if ($user) {
+            $user->currentAccessToken()->delete();
+            return response()->json(['message' => 'Logout successful'], 200)
+                ->header('Access-Control-Allow-Origin', 'http://localhost:5173')
+                ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+                ->header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With')
+                ->header('Access-Control-Allow-Credentials', 'true');
+        }
+    
+        return response()->json(['message' => 'Unauthenticated'], 401)
             ->header('Access-Control-Allow-Origin', 'http://localhost:5173')
             ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
             ->header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With')
