@@ -5,13 +5,13 @@ import api from '../services/api';
 
 const router = useRouter();
 const user = ref({
-  gebruikersnaam: 'test',
-  naam: 'test',
-  achternaam: 'test',
-  geboortedatum: new Date().toISOString().split('T')[0],
-  email: 'test@gmail.com',
-  wachtwoord: 'Kayseri38!',
-  wachtwoord_confirmation: 'Kayseri38!'
+  gebruikersnaam: '',
+  naam: '',
+  achternaam: '',
+  geboortedatum: '',
+  email: '',
+  wachtwoord: '',
+  wachtwoord_confirmation: ''
 });
 const errorMessage = ref(null);
 
