@@ -43,7 +43,7 @@ import { RouterLink, RouterView } from 'vue-router'
 
 header {
   width: 100%;
-  background-color: #EF1A2D;
+  background-color: #db893b;
   padding: 10px 20px;
   position: fixed;
   top: 0;
@@ -109,7 +109,7 @@ body {
 }
 
 .dropdown-btn {
-  background-color: #EF1A2D;
+  background-color: #db893b;
   color: white;
   padding: 10px 15px;
   font-weight: bold;

@@ -3,24 +3,40 @@
     <div class="ferrari">
       <Home_Ferrari />
     </div>
-    <div class="card-container">
-      <ProeflesForm />
-      <InformatieHomepagina />
-    </div>
+    <section class="info_and_proefles">
+      <div class="card-container">
+        <InformatieHomepagina />
+        <ProeflesForm />
+      </div>
+    </section>
+    <section class="section2">
+      <div class="info2">
+        <InfoKaartjes />
+      </div>
+    </section>
+    <section class="section3">
+      <div class="tarieven">
+        <KleinTarieven />
+      </div>
+    </section>
   </div>
 
 </template>
 
 <script>
-import Home_Ferrari from '../components/Home_Ferrari.vue'
+import Home_Ferrari from '../components/Home_Ferrari.vue';
 import ProeflesForm from '../components/ProeflesForm.vue';
+import InfoKaartjes from '../components/InfoKaartjes.vue';
 import InformatieHomepagina from '../components/InformatieHomepagina.vue';
+import KleinTarieven from '../components/KleinTarieven.vue';
 
 export default {
   components: {
     Home_Ferrari,
     ProeflesForm,
-    InformatieHomepagina
+    InfoKaartjes,
+    InformatieHomepagina,
+    KleinTarieven
   }
 }
 </script>
@@ -30,16 +46,40 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  row-gap: 78px;
   height: 100%;
   min-height: 100vh;
 }
 
-.card-container{
+.section2{
+  background-color: #db893b;
+  width: 100%;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.section3{
+  
+}
+
+.info_and_proefles{
+  padding-top: 100px;
+  padding-bottom: 100px;
+  margin-bottom: -78px;
+  margin-top: -5px;
+  width: 100%;
+  background-color: rgb(224, 238, 238);
+  align-items: center;
+}
+
+.card-container {
   display: flex;
   flex-direction: row;
+  column-gap: 100px;
+  justify-content: center;
 }
+
 .ferrari, .contact_page {
   width: 100%;
-  flex-grow: 1;
 }
 </style>
