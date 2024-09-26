@@ -5,13 +5,13 @@ import api from '../services/api';
 
 const router = useRouter();
 const user = ref({
-  gebruikersnaam: '',
-  naam: '',
-  achternaam: '',
-  geboortedatum: '',
-  email: '',
-  wachtwoord: '',
-  wachtwoord_confirmation: ''
+  gebruikersnaam: 'test',
+  naam: 'test',
+  achternaam: 'test',
+  geboortedatum: new Date().toISOString().split('T')[0],
+  email: 'test@gmail.com',
+  wachtwoord: 'Kayseri38!',
+  wachtwoord_confirmation: 'Kayseri38!'
 });
 const errorMessage = ref(null);
 
@@ -24,6 +24,7 @@ const registerUser = async () => {
     };
     await api.post('/register', formattedUser);
     alert('Registration successful');
+    localStorage.setItem('user', JSON.stringify(user.value));
     router.push('/dashboard');
   } catch (error) {
     console.error('Registration failed', error);

@@ -57,7 +57,8 @@ export default {
         this.upcomingLessons = userData.lessons || []; // Placeholder, replace with actual API call if needed
         this.instructor = userData.instructor || null; // Placeholder, replace with actual API call if needed
       } else {
-        // Redirect to login if user data is missing
+        // Redirect to login if user data is 
+        console.log('User data not found. Redirecting to login page.');
         this.$router.push('/login');
       }
     },

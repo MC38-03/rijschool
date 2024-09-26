@@ -14,9 +14,10 @@ const loginUser = async () => {
     errorMessage.value = null;
     try {
         const response = await api.post('/login', user.value);
-        console.log('Login response:', response); // Debugging line
         if (response.data.success) {
             alert('Login successful');
+            localStorage.setItem('user', JSON.stringify(response.data.user));
+            console.log(response);
             router.push({ path: response.data.redirect });
         } else {
             errorMessage.value = response.data.message || 'Login failed.';
@@ -26,6 +27,7 @@ const loginUser = async () => {
         console.error(error);
     }
 };
+
 </script>
 
 <template>

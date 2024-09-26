@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Leerling; // Assuming you have a Leerling model
+
 
 Route::post('/login', function (Request $request) {
     $credentials = $request->validate([
@@ -23,6 +25,7 @@ Route::post('/login', function (Request $request) {
         return response()->json([
             'success' => true,
             'redirect' => '/dashboard',
+            'user' => Auth::user(),
         ]);
     }
 
@@ -30,6 +33,34 @@ Route::post('/login', function (Request $request) {
         'success' => false,
         'message' => 'Login failed. Invalid credentials.',
     ], 401);
+});
+
+Route::post('/register', function (Request $request) {
+    $data = $request->validate([
+        'gebruikersnaam' => ['required', 'string', 'max:255'],
+        'naam' => ['required', 'string', 'max:255'],
+        'achternaam' => ['required', 'string', 'max:255'],
+        'geboortedatum' => ['required', 'date'],
+        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        'wachtwoord' => ['required', 'string', 'min:8', 'confirmed'],
+    ]);
+
+    $user = User::create([
+        'gebruikersnaam' => $data['gebruikersnaam'],
+        'naam' => $data['naam'],
+        'achternaam' => $data['achternaam'],
+        'geboortedatum' => $data['geboortedatum'],
+        'email' => $data['email'],
+        'wachtwoord' => bcrypt($data['wachtwoord']),
+    ]);
+
+    Auth::login($user);
+
+    return response()->json([
+        'success' => true,
+        'redirect' => '/dashboard',
+        'user' => $user,
+    ]);
 });
 
 Route::middleware('auth:sanctum')->get('/api/user', function (Request $request) {
