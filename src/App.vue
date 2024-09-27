@@ -1,12 +1,15 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-</script>
-
 <template>
   <header>
     <nav class="navbar">
-      <div class="new-link-left">
+      <!-- First dropdown (invisible and unclickable) -->
+      <div class="dropdown invisible-dropdown">
+        <button class="dropdown-btn">Login/Register</button>
+        <div class="dropdown-content">
+          <RouterLink to="/login">Login</RouterLink>
+          <RouterLink to="/register">Register</RouterLink>
+        </div>
       </div>
+
       <div class="nav-links">
         <div class="nav-buttons-left">
           <RouterLink to="/">Home</RouterLink>
@@ -20,12 +23,15 @@ import { RouterLink, RouterView } from 'vue-router'
           <RouterLink to="/contact">Contact</RouterLink>
         </div>
       </div>
+
+      <!-- Second dropdown with logout -->
       <div class="new-link-right">
         <div class="dropdown">
           <button class="dropdown-btn">Login/Register</button>
           <div class="dropdown-content">
             <RouterLink to="/login">Login</RouterLink>
             <RouterLink to="/register">Register</RouterLink>
+            <a @click.prevent="logout">Logout</a>
           </div>
         </div>
       </div>
@@ -33,6 +39,36 @@ import { RouterLink, RouterView } from 'vue-router'
   </header>
   <RouterView />
 </template>
+
+<script>
+import { useRouter } from 'vue-router';
+import api, { getCsrfToken } from '../src/services/api';
+
+export default {
+  name: 'HeaderComponent',
+  setup() {
+    const router = useRouter();
+
+    const logout = async () => {
+      try {
+        await getCsrfToken();
+
+        await api.post('/logout');
+
+        localStorage.removeItem('token');
+        router.push('/login');
+      } catch (error) {
+        console.error('Logout failed:', error);
+      }
+    };
+
+    return {
+      logout,
+    };
+  },
+};
+</script>
+
 
 <style scoped>
 * {
@@ -103,6 +139,7 @@ body {
   padding-top: 70px; /* Adjust this to be the height of the navbar */
 }
 
+/* Dropdown styling (shared) */
 .dropdown {
   position: relative;
   display: inline-block;
@@ -151,5 +188,11 @@ body {
 
 .dropdown:hover .dropdown-btn {
   background-color: #810303;
+}
+
+/* Invisible dropdown styling */
+.invisible-dropdown {
+  opacity: 0;
+  pointer-events: none;
 }
 </style>
