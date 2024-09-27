@@ -24,12 +24,13 @@
       </div>
 
       <div class="new-link-right">
+        <RouterLink v-if="isAuthenticated" to="/dashboard" class="btn-dashboard">Dashboard</RouterLink>
         <div class="dropdown">
           <button class="dropdown-btn">Login/Register</button>
           <div class="dropdown-content">
             <RouterLink to="/login">Login</RouterLink>
             <RouterLink to="/register">Register</RouterLink>
-            <a @click.prevent="logout">Logout</a>
+            <a v-if="isAuthenticated" @click.prevent="logout">Logout</a>
           </div>
         </div>
       </div>
@@ -39,6 +40,7 @@
 </template>
 
 <script>
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import api from '../src/services/api';  // Your axios instance
 
@@ -46,17 +48,30 @@ export default {
   name: 'HeaderComponent',
   setup() {
     const router = useRouter();
+    const isAuthenticated = ref(false);
 
     const logout = async () => {
       try {
         await api.post('/logout');  // Call the logout API provided by Breeze
+        isAuthenticated.value = false;
         router.push('/login');  // Redirect to login page after logout
+        alert("Logged out")
       } catch (error) {
         console.error('Logout failed:', error);
       }
     };
 
+    onMounted(async () => {
+      try {
+        const response = await api.get('/api/user');
+        isAuthenticated.value = !!response.data;  // If there's a user, the user is authenticated
+      } catch (error) {
+        isAuthenticated.value = false;
+      }
+    });
+
     return {
+      isAuthenticated,
       logout,
     };
   },
@@ -72,7 +87,7 @@ export default {
 
 header {
   width: 100%;
-  background-color: #EF1A2D;
+  background-color: #db893b;
   padding: 10px 20px;
   position: fixed;
   top: 0;
@@ -121,25 +136,25 @@ header {
 .nav-links a:hover,
 .new-link-left a:hover,
 .new-link-right a:hover {
-  background-color: #283593;
+  background-color: #68401a;
 }
 
 .nav-links a:hover {
-  background-color: #810303;
+  background-color: #68401a;
 }
 
 body {
-  padding-top: 70px; /* Adjust this to be the height of the navbar */
+  padding-top: 70px;
 }
 
-/* Dropdown styling (shared) */
+
 .dropdown {
   position: relative;
   display: inline-block;
 }
 
 .dropdown-btn {
-  background-color: #EF1A2D;
+  background-color: #db893b;
   color: white;
   padding: 10px 15px;
   font-weight: bold;
@@ -150,7 +165,7 @@ body {
 }
 
 .dropdown-btn:hover {
-  background-color: #810303;
+  background-color: #68401a;
 }
 
 .dropdown-content {
@@ -180,10 +195,23 @@ body {
 }
 
 .dropdown:hover .dropdown-btn {
-  background-color: #810303;
+  background-color: #68401a;
 }
 
-/* Invisible dropdown styling */
+.btn-dashboard {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 15px;
+  background-color: #db893b;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.btn-dashboard:hover {
+  background-color: #68401a;
+}
+
 .invisible-dropdown {
   opacity: 0;
   pointer-events: none;

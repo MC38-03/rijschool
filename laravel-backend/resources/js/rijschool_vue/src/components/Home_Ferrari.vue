@@ -4,13 +4,15 @@
       <img src="../assets/ferrari_stuur.jpg" class="background-img">
       <div class="card-content">
         <div class="content-wrapper">
-          <h1 class="section-title">Je rijbewijs halen was nog nooit zo makkelijk geweest!</h1>
-          <p class="section-text">This is a wider section with supporting text below as a natural lead-in to additional
-            content. This content is a little bit longer.</p>
+          <h1 class="section-title">Je rijbewijs halen was nog nooit zo makkelijk geweest!</h1><br>
           <ul class="a">
-            <li>goedkoop</li>
-            <li>korting</li>
-            <li>zart zurt</li>
+            <li>Laagste prijs voor rijlespakketten met examengarantie</li>
+            <li>Gratis herexamen bij rijlessenpakketten met examengarantie</li>
+            <li>Zeer hoog slagingspercentage</li>
+            <li>60 minuten per rijles</li>
+            <li>Je kunt direct starten</li>
+            <li>Je kunt snel examen doen, er is bij ons geen wachttijd!</li>
+            <li>Je kunt achteraf gespreid betalen</li>
           </ul>
         </div>
       </div>
@@ -18,7 +20,7 @@
   </section>
 </template>
 
-<script>
+<script scoped>
 export default {
   name: 'Welcome_Card',
 };
@@ -31,13 +33,17 @@ export default {
   box-sizing: border-box;
 }
 
+h1.section-title{
+  font-size: 40px;
+}
+
 
 .section-container {
   position: relative;
   top: 77px;
   left: 0;
   width: 100%;
-  height: 450px;
+  height: 750px;
   overflow: hidden;
   background: black;
   z-index: -1;
@@ -47,8 +53,8 @@ export default {
 .section-content {
   width: 100%;
   height: 100%;
-  /* position: relative; */
-}
+  justify-content: center; /* Yatayda ortalar */
+  align-items: center; /* Dikeyde ortalar */}
 
 .background-img {
   object-fit: cover;
@@ -65,7 +71,8 @@ export default {
   color: white;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: center; /* İçeriği yatayda ortalar */
+  align-items: center; /* İçeriği dikeyde ortalar */  
   height: 100%;
   padding: 20px;
   text-align: left;
@@ -73,13 +80,22 @@ export default {
 }
 
 .content-wrapper {
-  width: 60%;
-  margin-left: 25%;
+  width: 100%; /* Ekran genişliğine göre içerik genişliği */
+  max-width: 1000px; /* Maksimum genişlik ayarlayabilirsin */
   text-align: left;
 }
 
 ul.a {
+  font-size: 30px;
+  font-weight: 600;
   list-style-type: circle;
   list-style-position: inside;
+}
+ul{
+  list-style-image: url('../../../../js/rijschool_vue/src/assets/ul_icon_mid.png');
+  list-style-position: inside;
+}
+li {
+  margin: 17px;
 }
 </style>

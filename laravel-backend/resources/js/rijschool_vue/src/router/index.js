@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, onBeforeRouteUpdate } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import Tarieven from '../views/TarievenView.vue';
 import About from '../components/About.vue';
@@ -6,7 +6,8 @@ import Register from '../components/Register.vue';
 import Contact from '../components/Contact.vue';
 import Login from '../components/Login.vue';
 import Dashboard from '../components/Dashboard.vue';
-import api from '../services/api'
+import CrudLinks from '../components/CrudLinks.vue';
+import api from '../services/api';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -46,9 +47,16 @@ const router = createRouter({
       name: 'dashboard',
       component: Dashboard,
       meta: { requiresAuth: true }
-    }
+    },
+    {
+      path: '/crudlinks',
+      name: 'crudlinks',
+      component: CrudLinks,
+      meta: { requiresAuth: true }
+    },
   ]
 });
+
 
 router.beforeEach(async (to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
@@ -68,5 +76,15 @@ router.beforeEach(async (to, from, next) => {
   }
 });
 
+// Exclude certain routes from Vue.js and let Laravel handle them
+const excludeRoutes = ['/beschikbaarheden', '/leerlingen', '/lessen', '/voertuigen', '/facturen', '/instructeurs'];
+
+router.beforeEach((to, from, next) => {
+  if (excludeRoutes.includes(to.path)) {
+    window.location.href = to.fullPath;
+  } else {
+    next();
+  }
+});
 
 export default router;
