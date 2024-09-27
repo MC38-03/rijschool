@@ -8,7 +8,7 @@
 </head>
 <body>
     <header>
-        <h1>Rijschool</h1>
+        <a href="/"><h1>Home</h1></a>
         <nav>
             <a href="/">Home</a>
             <a href="/beschikbaarheden">Beschikbaarheden</a>

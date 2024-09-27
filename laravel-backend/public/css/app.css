@@ -18,7 +18,7 @@ p {
 
 /* Header and navigation */
 header {
-    background-color: #cc0000;
+    background-color: #db893b;
     color: white;
     padding: 10px 0;
     text-align: center;
@@ -43,7 +43,7 @@ nav a {
 }
 
 nav a:hover {
-    background-color: #ff5555;
+    background-color: #68401a;
     border-radius: 5px;
 }
 
@@ -80,7 +80,7 @@ form input, form select, form textarea {
 }
 
 form button {
-    background-color: #cc0000;
+    background-color: #db893b;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -89,7 +89,7 @@ form button {
 }
 
 form button:hover {
-    background-color: #ff5555;
+    background-color: #68401a;
 }
 
 /* Table styles */

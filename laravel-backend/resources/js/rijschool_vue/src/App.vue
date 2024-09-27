@@ -12,7 +12,7 @@
       <div class="nav-links">
         <div class="nav-buttons-left">
           <RouterLink to="/">Home</RouterLink>
-          <RouterLink to="/tarieven">Tarieven</RouterLink>
+          <RouterLink to="/lessen">Rooster</RouterLink>
         </div>
         <div class="logo">
           <img src="../../../../public/assets/recepauto.png" alt="Logo" class="logo-image" />
@@ -42,7 +42,7 @@
 <script>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import api from '../src/services/api';  // Your axios instance
+import api from '../src/services/api';  // axios instance
 
 export default {
   name: 'HeaderComponent',
@@ -52,7 +52,7 @@ export default {
 
     const logout = async () => {
       try {
-        await api.post('/logout');  // Call the logout API provided by Breeze
+        await api.post('/logout');  // Call logout API provided by Breeze
         isAuthenticated.value = false;
         router.push('/login');  // Redirect to login page after logout
         alert("Logged out")
