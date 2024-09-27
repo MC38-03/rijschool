@@ -31,7 +31,7 @@
                     <td>{{ $les->eind_tijd }}</td>
                     <td>{{ $les->leerling->naam }}</td>
                     <td>{{ $les->instructeur->naam }}</td>
-                    <td>{{ $les->voertuig->naam }}</td>
+                    <td>{{ $les->voertuig->type }}</td>
                     <td>
                         <a href="{{ route('lessen.show', $les->id) }}" class="btn btn-info">View</a>
                         <a href="{{ route('lessen.edit', $les->id) }}" class="btn btn-warning">Edit</a>

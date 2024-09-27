@@ -21,7 +21,7 @@ class LesController extends Controller
         $instructeurs = Instructeur::all();
         $leerlingen = User::all();
         $voertuigen = Voertuig::all();
-        return view('lessen.create', compact('instructeurs', 'leerling', 'voertuigen'));
+        return view('lessen.create', compact('instructeurs', 'leerlingen', 'voertuigen'));
     }
 
     public function store(Request $request)
