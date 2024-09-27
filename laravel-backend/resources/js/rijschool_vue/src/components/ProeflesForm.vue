@@ -28,7 +28,7 @@
       <label for="message">Bericht:</label>
       <textarea id="message" v-model="form.message" required></textarea>
       <br>
-      <button type="submit">Verzenden</button>
+      <button type="submit"><a href=”mailto:etkatrabzon@gmail.com”>Verzenden</a></button>
     </form>
   </div>
 </template>
@@ -47,9 +47,6 @@ export default {
   },
   methods: {
     sendForm() {
-      // Form gönderim işlemi
-      console.log('Form gönderildi:', this.form);
-      // Burada formu bir servise gönderebilirsin veya bir e-posta API'sine bağlanabilirsin
     }
   }
 };
@@ -64,6 +61,11 @@ export default {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   border-radius: 20px;
   background-color: rgb(241, 241, 227);
+}
+
+a {
+  text-decoration: none;
+  color: white;
 }
 
 form {
