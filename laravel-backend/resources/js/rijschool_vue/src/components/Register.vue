@@ -62,7 +62,6 @@ export default {
 .register-container {
     display: flex;
     justify-content: center;
-    flex-direction: column;
     align-items: center;
     min-height: 100vh;
     background-color: #f7f7f7;

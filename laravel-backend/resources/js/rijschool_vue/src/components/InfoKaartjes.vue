@@ -46,22 +46,21 @@
     .kaartjes {
         display: flex;
         justify-content: center;
-        gap: 50px; /* Kartlar arasındaki boşluğu ayarla */
+        gap: 50px; 
         margin: 80px 0;
     }
 
     .card {
-        width: 380px; /* Kartların genişliği */
-        /* Diğer kart stilleri */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Hafif gölge ekleyerek kartları vurgula */
-        border-radius: 8px; /* Kart kenarlarını yuvarla */
+        width: 380px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
+        border-radius: 8px;
         background-color: rgb(255, 255, 255);
     }
 
     .card-img-top {
-        width: 100%; /* Resmin kart genişliğine yayılmasını sağla */
-        height: 200px; /* Resmin sabit bir yüksekliği olsun */
-        object-fit: cover; /* Resmi kırparak kartın içine sığdır */
+        width: 100%; 
+        height: 200px; 
+        object-fit: cover;
     }
 
     .card-body {

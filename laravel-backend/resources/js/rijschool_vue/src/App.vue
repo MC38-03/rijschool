@@ -13,6 +13,7 @@
         <div class="nav-buttons-left">
           <RouterLink to="/">Home</RouterLink>
           <a href="/student/schedule">Rooster</a>
+          <RouterLink to="/tarieven">Tarieven</RouterLink>
         </div>
         <div class="logo">
           <img src="../../../../public/assets/recepauto.png" alt="Logo" class="logo-image" />
@@ -89,7 +90,7 @@ header {
   width: 100%;
   background-color: #db893b;
   padding: 10px 20px;
-  position: fixed;
+  position: relative;
   top: 0;
   left: 0;
   z-index: 1000;

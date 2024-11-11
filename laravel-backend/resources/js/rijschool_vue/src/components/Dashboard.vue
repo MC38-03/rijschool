@@ -24,6 +24,7 @@ export default {
     return {
       studentName: '',
       userRole: '',
+      Usermail: '',
     };
   },
   mounted() {
@@ -35,6 +36,7 @@ export default {
         const userData = window.Laravel.user;
         this.studentName = userData.naam || userData.name;
         this.userRole = userData.role;
+        this.Usermail = userData.email
       } else {
         console.log('User data not found. Redirecting to login page.');
         this.$router.push('/login');

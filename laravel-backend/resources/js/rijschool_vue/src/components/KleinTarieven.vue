@@ -20,7 +20,7 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Motorrijlessen</h5>
-          <p class="card-text">Complete rijopleiding met examengzarantie.</p><br>
+          <p class="card-text">Complete rijopleiding met examengarantie.</p><br>
           <p class="vanaf"><b>vanaf</b></p>
           <strong>€1450,-</strong><br><br>
           <ul class="details">
@@ -73,7 +73,7 @@
 export default {
   methods: {
     gaNaarTarieven() {
-      this.$router.push('/tarieven'); // 'tarieven' sayfasına yönlendirme
+      this.$router.push('/tarieven'); 
     }
   }
 }
@@ -84,14 +84,29 @@ export default {
 @import 'bootstrap/scss/bootstrap';
 
 .card {
-  width: 380px;
+  width: 300px;
+  height: 100%; 
+  display: flex; 
+  flex-direction: column; 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   border-radius: 8px;
   background-color: rgb(255, 255, 255);
   overflow: hidden;
 }
 
+.card-body {
+  flex-grow: 1; 
+}
 
+.row {
+  display: flex; 
+  flex-wrap: wrap;
+}
+.col {
+  display: flex; 
+  flex: 1; 
+  min-width: 300px; 
+}
 strong {
   font-size: 30px;
   padding: 0cm;

@@ -10,6 +10,8 @@ use App\Http\Controllers\LesController;
 use App\Http\Controllers\VoertuigController;
 use App\Http\Controllers\FactuurController;
 use App\Http\Controllers\BeschikbaarheidController;
+use App\Http\Controllers\TestDriveController;
+
 
 // Authentication routes (login, register, logout)
 Route::post('/login', function (Request $request) {
@@ -98,6 +100,8 @@ Route::resource('facturen', FactuurController::class);
 Route::middleware('auth')->group(function () {
     Route::get('/student/schedule', [LesController::class, 'studentSchedule'])->name('student.schedule');
 });
+
+Route::post('/send-test-drive-email', [TestDriveController::class, 'sendRequestEmail']);
 
 
 Route::get('/{any}', function () {

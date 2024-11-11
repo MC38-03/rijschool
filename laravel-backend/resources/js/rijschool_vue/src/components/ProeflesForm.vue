@@ -28,7 +28,7 @@
       <label for="message">Bericht:</label>
       <textarea id="message" v-model="form.message" required></textarea>
       <br>
-      <button type="submit"><a href=”mailto:etkatrabzon@gmail.com”>Verzenden</a></button>
+      <button type="submit">Verzenden</button>
     </form>
   </div>
 </template>
@@ -47,6 +47,9 @@ export default {
   },
   methods: {
     sendForm() {
+      // Form gönderim işlemi
+      console.log('Form gönderildi:', this.form);
+      // Burada formu bir servise gönderebilirsin veya bir e-posta API'sine bağlanabilirsin
     }
   }
 };
@@ -61,11 +64,6 @@ export default {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   border-radius: 20px;
   background-color: rgb(241, 241, 227);
-}
-
-a {
-  text-decoration: none;
-  color: white;
 }
 
 form {
@@ -99,7 +97,7 @@ button:hover {
 
 
 ul{
-  list-style-image: url('../../../../js/rijschool_vue/src/assets/ul_icon_small.png');
+  list-style-image: url('../assets/ul_icon_small.png');
   list-style-position: inside;
 }
 

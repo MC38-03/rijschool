@@ -20,6 +20,9 @@
         <KleinTarieven />
       </div>
     </section>
+    <footer class="footer">
+      <FooterComponent />
+    </footer>
   </div>
 
 </template>
@@ -30,6 +33,7 @@ import ProeflesForm from '../components/ProeflesForm.vue';
 import InfoKaartjes from '../components/InfoKaartjes.vue';
 import InformatieHomepagina from '../components/InformatieHomepagina.vue';
 import KleinTarieven from '../components/KleinTarieven.vue';
+import FooterComponent from '../components/FooterComponent.vue';
 
 export default {
   components: {
@@ -37,12 +41,13 @@ export default {
     ProeflesForm,
     InfoKaartjes,
     InformatieHomepagina,
-    KleinTarieven
+    KleinTarieven,
+    FooterComponent
   }
 }
 </script>
 
-<style>
+<style scoped>
 .homepage {
   display: flex;
   flex-direction: column;
@@ -50,6 +55,17 @@ export default {
   row-gap: 78px;
   height: 100%;
   min-height: 100vh;
+  margin-top: -77px;
+}
+
+footer{
+  background-color: #ddb895;
+  width: 100%;
+  padding-top: 60px;
+  padding-bottom: 30px;
+  margin-top: -69px;
+  display: flex;
+  text-align: center;
 }
 
 .section2{
@@ -58,18 +74,20 @@ export default {
   padding-top: 30px;
   padding-bottom: 30px;
 }
+
 h1.klein_tarieven_titel{
   text-align: center;
   font-size: 50px;
   padding-bottom: 40px;
   padding-top: 40px;
 }
+
 .section3{
   background-color: rgb(224, 238, 238);
   width: 100%;
   margin-top: -78px;
   padding-top: 30px;
-  padding-bottom: 30px;
+  padding-bottom: 70px;
 }
 
 .tarieven{

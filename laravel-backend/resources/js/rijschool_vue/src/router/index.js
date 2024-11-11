@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import Tarieven from '../views/TarievenView.vue';
-import About from '../components/About.vue';
+import AboutView from '../views/AboutView.vue';
 import Register from '../components/Register.vue';
-import Contact from '../components/Contact.vue';
+import ContactView from '../views/ContactView.vue';
 import Login from '../components/Login.vue';
 import Dashboard from '../components/Dashboard.vue';
 import CrudLinks from '../components/CrudLinks.vue';
@@ -20,7 +20,8 @@ const router = createRouter({
     {
       path: '/about',
       name: 'about',
-      component: About
+
+      component: AboutView
     },
     {
       path: '/tarieven',
@@ -28,6 +29,7 @@ const router = createRouter({
       component: Tarieven
     },
     {
+
       path: '/register',
       name: 'register',
       component: Register
@@ -36,11 +38,13 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: Login
+
     },
     {
       path: '/contact',
       name: 'contact',
-      component: Contact
+      component: ContactView
+
     },
     {
       path: '/dashboard',
