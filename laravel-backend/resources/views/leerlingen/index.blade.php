@@ -2,39 +2,37 @@
 
 @section('content')
 <div class="container">
-    <h1>All Leerlingen</h1>
-    <a href="{{ route('leerlingen.create') }}" class="btn btn-primary mb-3">Add New Leerling</a>
-    
+    <h1>Alle Leerlingen</h1>
+    <a href="{{ route('leerlingen.create') }}" class="addbutton btn btn-primary mb-3">Voeg nieuw leerling toe</a>
+
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <table class="table table-bordered">
+    <table class="table mt-4">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Naam</th>
                 <th>Achternaam</th>
                 <th>Email</th>
                 <th>Leeftijd</th>
-                <th>Actions</th>
+                <th>Acties</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($leerlingen as $leerling)
                 <tr>
-                    <td>{{ $leerling->id }}</td>
                     <td>{{ $leerling->naam }}</td>
                     <td>{{ $leerling->achternaam }}</td>
                     <td>{{ $leerling->email }}</td>
-                    <td>{{ $leerling->leeftijd }}</td>
-                    <td>
-                        <a href="{{ route('leerlingen.show', $leerling->id) }}" class="btn btn-info">View</a>
-                        <a href="{{ route('leerlingen.edit', $leerling->id) }}" class="btn btn-warning">Edit</a>
-                        <form action="{{ route('leerlingen.destroy', $leerling->id) }}" method="POST" class="d-inline">
+                    <td>{{ \Carbon\Carbon::parse($leerling->geboortedatum)->age }}</td>
+                    <td class="table-actions">
+                        <a href="{{ route('leerlingen.show', $leerling->id) }}" class="btn btn-view">View</a>
+                        <a href="{{ route('leerlingen.edit', $leerling->id) }}" class="btn btn-edit">Edit</a>
+                        <form action="{{ route('leerlingen.destroy', $leerling->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <button type="submit" class="btn btn-delete">Verwijder</button>
                         </form>
                     </td>
                 </tr>

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Edit Instructeur</h1>
+    <h1>Wijzig Instructeur</h1>
     <form action="{{ route('instructeurs.update', $instructeur) }}" method="POST">
         @csrf
         @method('PUT')
@@ -26,6 +26,6 @@
                 @endforeach
             </select>
         </div>
-        <button type="submit" class="btn btn-success">Update</button>
+        <button type="submit" class="btn btn-success">Wijzig</button>
     </form>
 @endsection

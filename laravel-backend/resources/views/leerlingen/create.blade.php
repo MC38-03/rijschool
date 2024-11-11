@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Create New Leerling</h1>
+    <h1>Voeg nieuw leerling toe</h1>
     
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -32,7 +32,7 @@
             <label for="leeftijd">Leeftijd:</label>
             <input type="number" name="leeftijd" class="form-control" value="{{ old('leeftijd') }}">
         </div>
-        <button type="submit" class="btn btn-primary mt-3">Create Leerling</button>
+        <button type="submit" class="btn btn-primary mt-3">Voeg nieuw leerling toe</button>
     </form>
 </div>
 @endsection

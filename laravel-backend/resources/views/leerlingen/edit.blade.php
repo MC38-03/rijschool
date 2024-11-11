@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Edit Leerling</h1>
+    <h1>Wijzig leerling</h1>
     
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -31,9 +31,9 @@
         </div>
         <div class="form-group">
             <label for="leeftijd">Leeftijd:</label>
-            <input type="number" name="leeftijd" class="form-control" value="{{ $leerling->leeftijd }}">
+            <input type="number" name="leeftijd" class="form-control" value="{{ \Carbon\Carbon::parse($leerling->geboortedatum)->age }}">
         </div>
-        <button type="submit" class="btn btn-primary mt-3">Update Leerling</button>
+        <button type="submit" class="btn btn-primary mt-3">Wijzig leerling</button>
     </form>
 </div>
 @endsection

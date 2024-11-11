@@ -26,7 +26,7 @@ class FactuurController extends Controller
     {
         $validated = $request->validate([
             'instructeur_id' => 'required|exists:instructeurs,id',
-            'leerling_id' => 'required|exists:leerlingen,id',
+            'leerling_id' => 'required|exists:leerling,id',
             'bedrag' => 'required|numeric|min:0',
             'datum_uitgegeven' => 'required|date',
             'verval_datum' => 'required|date',
@@ -37,23 +37,39 @@ class FactuurController extends Controller
         return redirect()->route('facturen.index')->with('success', 'Factuur created successfully.');
     }
 
-    public function show(Factuur $factuur)
+    public function show($id)
     {
+        $factuur = Factuur::with(['leerling', 'instructeur'])->find($id);
+
+        if (!$factuur) {
+            return redirect()->route('facturen.index')->withErrors('Factuur not found.');
+        }
+
         return view('facturen.show', compact('factuur'));
     }
 
-    public function edit(Factuur $factuur)
+    public function edit($id)
     {
+        $factuur = Factuur::find($id);
+        if (!$factuur) {
+            return redirect()->route('facturen.index')->withErrors('Factuur not found.');
+        }
+
         $leerlingen = User::all();
         $instructeurs = Instructeur::all();
         return view('facturen.edit', compact('factuur', 'leerlingen', 'instructeurs'));
     }
 
-    public function update(Request $request, Factuur $factuur)
+    public function update(Request $request, $id)
     {
+        $factuur = Factuur::find($id);
+        if (!$factuur) {
+            return redirect()->route('facturen.index')->withErrors('Factuur not found.');
+        }
+
         $validated = $request->validate([
             'instructeur_id' => 'required|exists:instructeurs,id',
-            'leerling_id' => 'required|exists:leerlingen,id',
+            'leerling_id' => 'required|exists:leerling,id',
             'bedrag' => 'required|numeric|min:0',
             'datum_uitgegeven' => 'required|date',
             'verval_datum' => 'required|date',
@@ -64,8 +80,13 @@ class FactuurController extends Controller
         return redirect()->route('facturen.index')->with('success', 'Factuur updated successfully.');
     }
 
-    public function destroy(Factuur $factuur)
+    public function destroy($id)
     {
+        $factuur = Factuur::find($id);
+        if (!$factuur) {
+            return redirect()->route('facturen.index')->withErrors('Factuur not found.');
+        }
+
         $factuur->delete();
         return redirect()->route('facturen.index')->with('success', 'Factuur deleted successfully.');
     }

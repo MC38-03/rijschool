@@ -2,23 +2,54 @@
 
 @section('content')
 <div class="container">
-    <h1>Edit Invoice</h1>
+    <h1>Wijzig Invoice</h1>
 
     <form action="{{ route('facturen.update', $factuur->id) }}" method="POST">
         @csrf
         @method('PUT')
+        
         <div class="form-group">
-            <label for="amount">Amount</label>
-            <input type="number" name="amount" id="amount" class="form-control" value="{{ $factuur->amount }}" required>
+            <label for="instructeur_id">Instructeur</label>
+            <select name="instructeur_id" id="instructeur_id" class="form-control" required>
+                @foreach ($instructeurs as $instructeur)
+                    <option value="{{ $instructeur->id }}" {{ $factuur->instructeur_id == $instructeur->id ? 'selected' : '' }}>{{ $instructeur->naam }}</option>
+                @endforeach
+            </select>
         </div>
+        
+        <div class="form-group mt-3">
+            <label for="leerling_id">Leerling</label>
+            <select name="leerling_id" id="leerling_id" class="form-control" required>
+                @foreach ($leerlingen as $leerling)
+                    <option value="{{ $leerling->id }}" {{ $factuur->leerling_id == $leerling->id ? 'selected' : '' }}>{{ $leerling->naam }}</option>
+                @endforeach
+            </select>
+        </div>
+        
+        <div class="form-group mt-3">
+            <label for="bedrag">Amount</label>
+            <input type="number" name="bedrag" id="bedrag" class="form-control" value="{{ $factuur->bedrag }}" required>
+        </div>
+        
+        <div class="form-group mt-3">
+            <label for="datum_uitgegeven">Uitgegeven</label>
+            <input type="date" name="datum_uitgegeven" id="datum_uitgegeven" class="form-control" value="{{ $factuur->datum_uitgegeven }}" required>
+        </div>
+        
+        <div class="form-group mt-3">
+            <label for="verval_datum">Vervaldatum</label>
+            <input type="date" name="verval_datum" id="verval_datum" class="form-control" value="{{ $factuur->verval_datum }}" required>
+        </div>
+        
         <div class="form-group mt-3">
             <label for="status">Status</label>
             <select name="status" id="status" class="form-control">
-                <option value="unpaid" {{ $factuur->status == 'unpaid' ? 'selected' : '' }}>Unpaid</option>
-                <option value="paid" {{ $factuur->status == 'paid' ? 'selected' : '' }}>Paid</option>
+                <option value="open" {{ $factuur->status == 'unpaid' ? 'selected' : '' }}>Open</option>
+                <option value="betaald" {{ $factuur->status == 'paid' ? 'selected' : '' }}>Betaald</option>
             </select>
         </div>
-        <button type="submit" class="btn btn-success mt-3">Update Invoice</button>
+        
+        <button type="submit" class="btn btn-success mt-3">Wijzig factuur</button>
     </form>
 </div>
 @endsection

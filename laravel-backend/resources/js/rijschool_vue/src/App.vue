@@ -12,7 +12,7 @@
       <div class="nav-links">
         <div class="nav-buttons-left">
           <RouterLink to="/">Home</RouterLink>
-          <RouterLink to="/lessen">Rooster</RouterLink>
+          <a href="/student/schedule">Rooster</a>
         </div>
         <div class="logo">
           <img src="../../../../public/assets/recepauto.png" alt="Logo" class="logo-image" />

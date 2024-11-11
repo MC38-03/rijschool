@@ -77,24 +77,33 @@ Route::post('/logout', function (Request $request) {
     ]);
 });
 
-// Middleware to ensure users are authenticated
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 });
 
-// Define resourceful routes for CRUD operations (this will automatically handle create, edit, etc.)
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/leerlingen', [LeerlingController::class, 'index'])->name('leerlingen.index');
+});
+
+
 Route::resource('beschikbaarheden', BeschikbaarheidController::class);
 Route::resource('leerlingen', LeerlingController::class);
 Route::resource('lessen', LesController::class);
 Route::resource('voertuigen', VoertuigController::class);
-Route::resource('facturen', FactuurController::class);
 Route::resource('instructeurs', InstructeurController::class);
+Route::resource('facturen', FactuurController::class);
 
-// Catch-all route for Vue.js SPA
+Route::middleware('auth')->group(function () {
+    Route::get('/student/schedule', [LesController::class, 'studentSchedule'])->name('student.schedule');
+});
+
+
 Route::get('/{any}', function () {
-    return view('app'); // The entry point for your Vue.js app
+    return view('app');
 })->where('any', '^(?!admin|beschikbaarheden|leerlingen|lessen|voertuigen|facturen|instructeurs).*$');
 
-    
+Route::get('/{any}', function () {
+    return view('app');
+})->where('any', '.*'); 

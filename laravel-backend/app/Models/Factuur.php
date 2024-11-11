@@ -20,13 +20,14 @@ class Factuur extends Model
         'status',
     ];
 
-    public function instructeur()
-    {
-        return $this->belongsTo(Instructeur::class);
-    }
-
     public function leerling()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'leerling_id');
     }
+    
+    public function instructeur()
+    {
+        return $this->belongsTo(Instructeur::class, 'instructeur_id');
+    }
+    
 }

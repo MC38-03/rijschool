@@ -22,7 +22,7 @@ class InstructeurController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+                $validated = $request->validate([
             'naam' => 'required|string',
             'achternaam' => 'required|string',
             'email' => 'required|email|unique:instructeurs,email',
@@ -33,23 +33,27 @@ class InstructeurController extends Controller
         return redirect()->route('instructeurs.index')->with('success', 'Instructeur created successfully.');
     }
 
-    public function show(Instructeur $instructeur)
+    public function show($id)
     {
+        $instructeur = Instructeur::with('voertuig')->findOrFail($id);
         return view('instructeurs.show', compact('instructeur'));
     }
 
-    public function edit(Instructeur $instructeur)
+    public function edit($id)
     {
+        $instructeur = Instructeur::findOrFail($id);
         $voertuigen = Voertuig::all();
         return view('instructeurs.edit', compact('instructeur', 'voertuigen'));
     }
 
-    public function update(Request $request, Instructeur $instructeur)
+    public function update(Request $request, $id)
     {
-        $validated = $request->validate([
+        $instructeur = Instructeur::findOrFail($id);
+
+                $validated = $request->validate([
             'naam' => 'required|string',
             'achternaam' => 'required|string',
-            'email' => 'required|email|unique:instructeurs,email,' . $instructeur->id,
+            'email' => 'required|email|unique:instructeurs,email,' . $id,
             'voertuig_id' => 'nullable|exists:voertuigen,id',
         ]);
 
@@ -57,8 +61,10 @@ class InstructeurController extends Controller
         return redirect()->route('instructeurs.index')->with('success', 'Instructeur updated successfully.');
     }
 
-    public function destroy(Instructeur $instructeur)
+    public function destroy($id)
     {
+        $instructeur = Instructeur::findOrFail($id);
+
         $instructeur->delete();
         return redirect()->route('instructeurs.index')->with('success', 'Instructeur deleted successfully.');
     }

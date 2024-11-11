@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Create New Les</h1>
+    <h1>Maak een nieuwe les aan</h1>
     
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -52,7 +52,7 @@
                 @endforeach
             </select>
         </div>
-        <button type="submit" class="btn btn-primary mt-3">Create Les</button>
+        <button type="submit" class="btn btn-primary mt-3">Maak les aan</button>
     </form>
 </div>
 @endsection

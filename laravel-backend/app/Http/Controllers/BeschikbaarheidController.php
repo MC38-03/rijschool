@@ -33,19 +33,23 @@ class BeschikbaarheidController extends Controller
         return redirect()->route('beschikbaarheden.index')->with('success', 'Beschikbaarheid created successfully.');
     }
 
-    public function show(Beschikbaarheid $beschikbaarheid)
-    {
+    public function show($id)
+    {        $beschikbaarheid = Beschikbaarheid::with('instructeur')->findOrFail($id);
         return view('beschikbaarheden.show', compact('beschikbaarheid'));
     }
 
-    public function edit(Beschikbaarheid $beschikbaarheid)
+    public function edit($id)
     {
+
+        $beschikbaarheid = Beschikbaarheid::findOrFail($id);
         $instructeurs = Instructeur::all();
         return view('beschikbaarheden.edit', compact('beschikbaarheid', 'instructeurs'));
     }
 
-    public function update(Request $request, Beschikbaarheid $beschikbaarheid)
+    public function update(Request $request, $id)
     {
+        $beschikbaarheid = Beschikbaarheid::findOrFail($id);
+
         $validated = $request->validate([
             'datum' => 'required|date',
             'begin_tijd' => 'required|date_format:H:i',
@@ -57,8 +61,10 @@ class BeschikbaarheidController extends Controller
         return redirect()->route('beschikbaarheden.index')->with('success', 'Beschikbaarheid updated successfully.');
     }
 
-    public function destroy(Beschikbaarheid $beschikbaarheid)
+    public function destroy($id)
     {
+        $beschikbaarheid = Beschikbaarheid::findOrFail($id);
+
         $beschikbaarheid->delete();
         return redirect()->route('beschikbaarheden.index')->with('success', 'Beschikbaarheid deleted successfully.');
     }

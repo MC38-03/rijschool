@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Details of Leerling</h1>
+    <h1>Leerling details</h1>
     
     <div class="card">
         <div class="card-header">
@@ -10,7 +10,7 @@
         </div>
         <div class="card-body">
             <p><strong>Email:</strong> {{ $leerling->email }}</p>
-            <p><strong>Leeftijd:</strong> {{ $leerling->leeftijd }}</p>
+            <p><strong>Leeftijd:</strong> {{ \Carbon\Carbon::parse($leerling->geboortedatum)->age }}</p>
         </div>
         <div class="card-footer">
             <a href="{{ route('leerlingen.index') }}" class="btn btn-primary">Back to List</a>
@@ -18,7 +18,7 @@
             <form action="{{ route('leerlingen.destroy', $leerling->id) }}" method="POST" class="d-inline">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="btn btn-danger">Delete</button>
+                <button type="submit" class="btn btn-danger">Verwijder</button>
             </form>
         </div>
     </div>

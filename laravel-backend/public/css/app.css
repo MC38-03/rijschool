@@ -1,65 +1,60 @@
-/* General body and typography styling */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f9f9f9;
+    background-color: #f4f4f9;
     margin: 0;
     padding: 0;
     line-height: 1.6;
+    color: #333;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-weight: bold;
-    margin: 20px 0;
-}
-
-p {
-    margin: 10px 0;
-}
-
-/* Header and navigation */
 header {
     background-color: #db893b;
     color: white;
-    padding: 10px 0;
-    text-align: center;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 header h1 {
     margin: 0;
-    font-size: 28px;
+    font-size: 24px;
     color: #fff;
 }
 
 nav {
-    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
 }
 
 nav a {
     color: #fff;
     text-decoration: none;
-    padding: 8px 15px;
-    display: inline-block;
+    padding: 6px 12px;
     font-weight: bold;
+    transition: background-color 0.3s;
+    border-radius: 4px;
 }
 
 nav a:hover {
     background-color: #68401a;
-    border-radius: 5px;
 }
 
-/* Container for content */
 .container {
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 20px auto;
-    padding: 0 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Form styles */
 form {
     background: white;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    padding: 25px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
 form .form-group {
@@ -70,6 +65,7 @@ form label {
     font-weight: bold;
     display: block;
     margin-bottom: 5px;
+    color: #555;
 }
 
 form input, form select, form textarea {
@@ -77,6 +73,7 @@ form input, form select, form textarea {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    margin-top: 3px;
 }
 
 form button {
@@ -86,67 +83,183 @@ form button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 form button:hover {
     background-color: #68401a;
 }
 
-/* Table styles */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
+    margin-top: 20px;
     background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
 }
 
 table th, table td {
-    border: 1px solid #ccc;
-    padding: 10px;
+    padding: 12px 15px;
     text-align: left;
+    border-bottom: 1px solid #e0e0e0;
 }
 
 table th {
-    background-color: #f2f2f2;
+    background-color: #f7f7f7;
+    color: #333;
     font-weight: bold;
 }
 
 table tr:hover {
-    background-color: #f5f5f5;
+    background-color: #f9f9f9;
 }
 
 .table-actions {
     display: flex;
-    gap: 10px;
+    gap: 5px;
 }
 
 .table-actions a, .table-actions form button {
-    padding: 5px 10px;
+    padding: 6px 12px;
     text-decoration: none;
     color: white;
-    background-color: #007bff;
     border: none;
-    border-radius: 3px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.table-actions a:hover, .table-actions form button:hover {
-    background-color: #0056b3;
+.table-actions .btn-view {
+    background-color: #17a2b8;
 }
 
-.table-actions .btn-danger {
+.table-actions .btn-view:hover {
+    background-color: #117a8b;
+}
+
+.table-actions .btn-edit {
+    background-color: #ffbb33;
+}
+
+.table-actions .btn-edit:hover {
+    background-color: #d6a114;
+}
+
+.table-actions .btn-delete {
     background-color: #dc3545;
+    padding: 6px 12px;
+    border-radius: 4px;
+    box-shadow: none;
+    font-size: 14px;
+    display: inline-block;
 }
 
-.table-actions .btn-danger:hover {
+.table-actions .btn-delete:hover {
     background-color: #c82333;
 }
 
-/* Footer */
 footer {
     text-align: center;
     margin-top: 20px;
     padding: 10px;
     background-color: #f2f2f2;
-    color: #333;
+    color: #555;
+    font-size: 14px;
+    box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn {
+    display: inline-block;
+    padding: 8px 12px;
+    font-size: 14px;
+    color: black;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-view {
+    background-color: #007bff;
+}
+
+.btn-edit {
+    background-color: #ffbb33;
+}
+
+.btn-delete {
+    background-color: #dc3545;
+}
+
+.btn-view:hover {
+    background-color: #0056b3;
+}
+
+.btn-edit:hover {
+    background-color: #d6a114;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+}
+
+.table-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.inline-form {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
+.addbutton{
+    padding: 2px;
+    border: 1px solid black;
+    border-radius: 5%;
+    background-color:green;
+    color: white;
+    
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #db893b;
+    color: white;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.header-title {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 10px;
+    
+}
+
+.header-title a {
+    text-decoration: none;
+}
+
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #fff;
+    text-align: center;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
 }

@@ -33,7 +33,7 @@ export default {
   box-sizing: border-box;
 }
 
-h1.section-title{
+h1.section-title {
   font-size: 40px;
 }
 
@@ -53,8 +53,9 @@ h1.section-title{
 .section-content {
   width: 100%;
   height: 100%;
-  justify-content: center; /* Yatayda ortalar */
-  align-items: center; /* Dikeyde ortalar */}
+  justify-content: center;
+  align-items: center;
+}
 
 .background-img {
   object-fit: cover;
@@ -71,8 +72,8 @@ h1.section-title{
   color: white;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* İçeriği yatayda ortalar */
-  align-items: center; /* İçeriği dikeyde ortalar */  
+  justify-content: center;
+  align-items: center;
   height: 100%;
   padding: 20px;
   text-align: left;
@@ -80,8 +81,8 @@ h1.section-title{
 }
 
 .content-wrapper {
-  width: 100%; /* Ekran genişliğine göre içerik genişliği */
-  max-width: 1000px; /* Maksimum genişlik ayarlayabilirsin */
+  width: 100%;
+  max-width: 1000px;
   text-align: left;
 }
 
@@ -91,10 +92,12 @@ ul.a {
   list-style-type: circle;
   list-style-position: inside;
 }
-ul{
+
+ul {
   list-style-image: url('../../../../js/rijschool_vue/src/assets/ul_icon_mid.png');
   list-style-position: inside;
 }
+
 li {
   margin: 17px;
 }

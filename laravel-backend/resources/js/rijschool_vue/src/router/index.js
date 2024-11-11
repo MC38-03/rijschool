@@ -57,33 +57,24 @@ const router = createRouter({
   ]
 });
 
-
+// Single `beforeEach` guard to handle authentication
 router.beforeEach(async (to, from, next) => {
+  // Check if the route requires authentication
   if (to.matched.some(record => record.meta.requiresAuth)) {
     try {
+      // Call the API to verify the user is authenticated
       const response = await api.get('/api/user');
       if (response.data) {
-        next();
+        next(); // User is authenticated, allow access
       } else {
-        next({ name: 'login' });
+        next({ name: 'login' }); // User not authenticated, redirect to login
       }
     } catch (error) {
-      console.error('Error in beforeEach: ', error);
-      next({ name: 'login' });
+      console.error('Error in authentication check:', error);
+      next({ name: 'login' }); // Redirect to login if an error occurs
     }
   } else {
-    next();
-  }
-});
-
-// Exclude certain routes from Vue.js and let Laravel handle them
-const excludeRoutes = ['/beschikbaarheden', '/leerlingen', '/lessen', '/voertuigen', '/facturen', '/instructeurs'];
-
-router.beforeEach((to, from, next) => {
-  if (excludeRoutes.includes(to.path)) {
-    window.location.href = to.fullPath;
-  } else {
-    next();
+    next(); // Route does not require authentication, allow access
   }
 });
 

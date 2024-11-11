@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Rijschool')</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
+
 <body>
     <header>
-        <a href="/"><h1>Home</h1></a>
+        <div class="header-title">
+            <a href="/">
+                <h1>Home</h1>
+            </a>
+        </div>
         <nav>
-            <a href="/">Home</a>
             <a href="/beschikbaarheden">Beschikbaarheden</a>
             <a href="/leerlingen">Leerlingen</a>
             <a href="/lessen">Lessen</a>
@@ -20,6 +25,8 @@
         </nav>
     </header>
 
+
+
     <main>
         @yield('content')
     </main>
@@ -28,4 +35,5 @@
         <p>&copy; 2024 Rijschool</p>
     </footer>
 </body>
+
 </html>

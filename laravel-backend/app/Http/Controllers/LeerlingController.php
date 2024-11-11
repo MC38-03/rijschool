@@ -24,38 +24,43 @@ class LeerlingController extends Controller
             'naam' => 'required|string',
             'achternaam' => 'required|string',
             'leeftijd' => 'required|integer',
-            'email' => 'required|email|unique:leerlingen,email',
+            'email' => 'required|email|unique:leerling,email',
         ]);
 
         User::create($validated);
         return redirect()->route('leerlingen.index')->with('success', 'Leerling created successfully.');
     }
 
-    public function show(User $leerling)
+    public function show($id)
     {
+        $leerling = User::findOrFail($id);
         return view('leerlingen.show', compact('leerling'));
     }
 
-    public function edit(User $leerling)
+    public function edit($id)
     {
+        $leerling = User::findOrFail($id);
         return view('leerlingen.edit', compact('leerling'));
     }
 
-    public function update(Request $request, User $leerling)
+    public function update(Request $request, $id)
     {
+        $leerling = User::findOrFail($id);
+
         $validated = $request->validate([
             'naam' => 'required|string',
             'achternaam' => 'required|string',
             'leeftijd' => 'required|integer',
-            'email' => 'required|email|unique:leerlingen,email,' . $leerling->id,
+            'email' => 'required|email|unique:leerling,email,' . $id,
         ]);
 
         $leerling->update($validated);
         return redirect()->route('leerlingen.index')->with('success', 'Leerling updated successfully.');
     }
 
-    public function destroy(User $leerling)
+    public function destroy($id)
     {
+        $leerling = User::findOrFail($id);
         $leerling->delete();
         return redirect()->route('leerlingen.index')->with('success', 'Leerling deleted successfully.');
     }

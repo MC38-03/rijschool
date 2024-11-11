@@ -1,10 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Instructeur Details</h1>
-    <p>Naam: {{ $instructeur->naam }}</p>
-    <p>Achternaam: {{ $instructeur->achternaam }}</p>
-    <p>Email: {{ $instructeur->email }}</p>
-    <p>Voertuig: {{ $instructeur->voertuig->naam ?? 'None' }}</p>
-    <a href="{{ route('instructeurs.index') }}" class="btn btn-primary">Back</a>
+<div class="container">
+    <h1 class="mb-4">Instructeur Details</h1>
+
+    <div class="card p-4 mb-4">
+        <p><strong>Naam:</strong> {{ $instructeur->naam }}</p>
+        <p><strong>Achternaam:</strong> {{ $instructeur->achternaam }}</p>
+        <p><strong>Email:</strong> {{ $instructeur->email }}</p>
+        <p><strong>Voertuig:</strong> {{ $instructeur->voertuig->type ?? 'None' }}</p>
+    </div>
+
+    <a href="{{ route('instructeurs.index') }}" class="btn btn-primary">Terug</a>
+</div>
 @endsection

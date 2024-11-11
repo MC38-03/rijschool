@@ -2,15 +2,15 @@
 
 @section('content')
 <div class="container">
-    <h1>Vehicle Details</h1>
+    <h1>Voertuig details</h1>
 
     <div class="card">
         <div class="card-body">
             <h3>{{ $voertuig->type }}</h3>
-            <p><strong>License Plate:</strong> {{ $voertuig->license_plate }}</p>
+            <p><strong>kenteken:</strong> {{ $voertuig->license_plate }}</p>
         </div>
     </div>
 
-    <a href="{{ route('voertuigen.index') }}" class="btn btn-primary mt-3">Back to List</a>
+    <a href="{{ route('voertuigen.index') }}" class="btn btn-primary mt-3">Terug naar lijst</a>
 </div>
 @endsection
