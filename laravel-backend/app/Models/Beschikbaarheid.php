@@ -16,10 +16,16 @@ class Beschikbaarheid extends Model
         'begin_tijd',
         'eind_tijd',
         'instructeur_id',
+        'voertuig_id'
     ];
 
     public function instructeur()
     {
         return $this->belongsTo(Instructeur::class);
+    }
+
+    public function voertuig()
+    {
+        return $this->belongsTo(Voertuig::class, 'voertuig_id');
     }
 }

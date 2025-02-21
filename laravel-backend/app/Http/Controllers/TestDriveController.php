@@ -21,7 +21,7 @@ class TestDriveController extends Controller
         Mail::to('snipekingc38@gmail.com')
             ->send(new TestDriveRequestMail($validatedData));
     
-        return response()->json(['message' => 'Email sent successfully!'], 200);
+        return response()->json(['message' => 'Email succesvol verzonden!'], 200);
     }
     
 }

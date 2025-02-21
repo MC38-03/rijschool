@@ -9,6 +9,7 @@
         <thead>
             <tr>
                 <th>Instructeur</th>
+                <th>Voertuig</th> <!-- Added Vehicle Column -->
                 <th>Datum</th>
                 <th>Tijd</th>
                 <th>Acties</th>
@@ -18,6 +19,7 @@
             @foreach ($beschikbaarheden as $beschikbaarheid)
                 <tr>
                     <td>{{ $beschikbaarheid->instructeur->naam ?? 'N/A' }}</td>
+                    <td>{{ $beschikbaarheid->voertuig->type ?? 'Geen voertuig' }}</td> <!-- Added Voertuig -->
                     <td>{{ $beschikbaarheid->datum }}</td>
                     <td>{{ \Carbon\Carbon::parse($beschikbaarheid->begin_tijd)->format('H:i') }} -
                         {{ \Carbon\Carbon::parse($beschikbaarheid->eind_tijd)->format('H:i') }}</td>

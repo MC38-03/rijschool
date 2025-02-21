@@ -17,14 +17,33 @@ class LesController extends Controller
     public function index()
     {
         $user = Auth::user();
-
+    
         $lessen = Les::where('leerling_id', $user->id)
             ->orWhere('instructeur_id', $user->id)
             ->with(['leerling', 'instructeur', 'voertuig'])
             ->get();
-
-        return view('lessen.index', compact('lessen'));
+    
+        $instructeurs = Instructeur::all();
+    
+        // Generate current week's days dynamically
+        $startOfWeek = now()->startOfWeek();
+        $weekDays = [];
+        for ($i = 0; $i < 7; $i++) {
+            $weekDays[] = $startOfWeek->copy()->addDays($i)->format('Y-m-d');
+        }
+    
+        // Get available lesson slots based on beschikbaarheden
+        $beschikbaarheden = \App\Models\Beschikbaarheid::with('instructeur', 'voertuig')
+            ->whereIn('datum', $weekDays)
+            ->get();
+    
+        // Extract unique available time slots from beschikbaarheden
+        $timeSlots = $beschikbaarheden->pluck('begin_tijd')->unique()->sort()->values()->all();
+    
+        return view('lessen.index', compact('lessen', 'instructeurs', 'weekDays', 'beschikbaarheden', 'timeSlots'));
     }
+    
+    
 
     public function studentSchedule()
     {

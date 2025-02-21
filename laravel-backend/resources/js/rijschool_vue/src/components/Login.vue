@@ -16,15 +16,18 @@ const loginUser = async () => {
   errorMessage.value = null
   try {
     const response = await api.post('/login', user.value)
-    alert('Login successful', response.data)
 
-    router.push('/dashboard')
+    // Store token in localStorage or sessionStorage
+    localStorage.setItem('authToken', response.data.token)
+
+    // Reload the page to update authentication state
+    window.location.href = '/dashboard'
   } catch (error) {
     console.error('Login failed', error)
     if (error.response && error.response.data) {
       errorMessage.value = error.response.data.message
     } else {
-      errorMessage.value = 'An unexpected error occurred'
+      errorMessage.value = 'Er is een onverwachte fout opgetreden'
     }
   }
 }

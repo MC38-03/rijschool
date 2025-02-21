@@ -28,28 +28,48 @@
       <label for="message">Bericht:</label>
       <textarea id="message" v-model="form.message" required></textarea>
       <br>
-      <button type="submit">Verzenden</button>
+      <button type="submit" :disabled="loading">
+        {{ loading ? 'Verzenden...' : 'Verzenden' }}
+      </button>
+      <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
+      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
     </form>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'TestDriveCard',
   data() {
     return {
       form: {
         name: '',
+        surname: '',
         email: '',
         message: ''
-      }
+      },
+      loading: false,
+      successMessage: '',
+      errorMessage: ''
     };
   },
   methods: {
-    sendForm() {
-      // Form gönderim işlemi
-      console.log('Form gönderildi:', this.form);
-      // Burada formu bir servise gönderebilirsin veya bir e-posta API'sine bağlanabilirsin
+    async sendForm() {
+      this.loading = true;
+      this.successMessage = '';
+      this.errorMessage = '';
+
+      try {
+        const response = await axios.post('/send-test-drive-email', this.form);
+        this.successMessage = response.data.message;
+        this.form = { name: '', surname: '', email: '', message: '' }; // Reset form
+      } catch (error) {
+        this.errorMessage = error.response?.data?.message || 'Er is een fout opgetreden bij het verzenden.';
+      } finally {
+        this.loading = false;
+      }
     }
   }
 };
@@ -91,23 +111,35 @@ button {
   height: 50px;
 }
 
+button:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+}
+
 button:hover {
   background-color: #68401a;
 }
 
+.success-message {
+  color: green;
+  margin-top: 10px;
+}
 
-ul{
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+
+ul {
   list-style-image: url('../assets/ul_icon_small.png');
   list-style-position: inside;
 }
 
-h1.lower{
+h1.lower {
   text-align: left;
 }
-h1.upper{
+h1.upper {
   text-align: center;
   font-size: 38px;
 }
-
-
 </style>

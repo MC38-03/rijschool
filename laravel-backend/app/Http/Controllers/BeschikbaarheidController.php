@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Beschikbaarheid;
 use App\Models\Instructeur;
+use App\Models\Voertuig;
 use Illuminate\Http\Request;
 
 class BeschikbaarheidController extends Controller
@@ -17,8 +18,10 @@ class BeschikbaarheidController extends Controller
     public function create()
     {
         $instructeurs = Instructeur::all();
-        return view('beschikbaarheden.create', compact('instructeurs'));
+        $voertuigen = Voertuig::all();
+        return view('beschikbaarheden.create', compact('instructeurs', 'voertuigen'));
     }
+    
 
     public function store(Request $request)
     {
@@ -27,11 +30,14 @@ class BeschikbaarheidController extends Controller
             'begin_tijd' => 'required|date_format:H:i',
             'eind_tijd' => 'required|date_format:H:i',
             'instructeur_id' => 'required|exists:instructeurs,id',
+            'voertuig_id' => 'required|exists:voertuigen,id',
         ]);
-
+    
         Beschikbaarheid::create($validated);
-        return redirect()->route('beschikbaarheden.index')->with('success', 'Beschikbaarheid created successfully.');
+    
+        return redirect()->route('beschikbaarheden.index')->with('success', 'Beschikbaarheid toegevoegd.');
     }
+    
 
     public function show($id)
     {        $beschikbaarheid = Beschikbaarheid::with('instructeur')->findOrFail($id);
@@ -40,26 +46,29 @@ class BeschikbaarheidController extends Controller
 
     public function edit($id)
     {
-
         $beschikbaarheid = Beschikbaarheid::findOrFail($id);
         $instructeurs = Instructeur::all();
-        return view('beschikbaarheden.edit', compact('beschikbaarheid', 'instructeurs'));
+        $voertuigen = Voertuig::all();
+        return view('beschikbaarheden.edit', compact('beschikbaarheid', 'instructeurs', 'voertuigen'));
     }
+    
 
     public function update(Request $request, $id)
     {
-        $beschikbaarheid = Beschikbaarheid::findOrFail($id);
-
         $validated = $request->validate([
             'datum' => 'required|date',
             'begin_tijd' => 'required|date_format:H:i',
             'eind_tijd' => 'required|date_format:H:i',
             'instructeur_id' => 'required|exists:instructeurs,id',
+            'voertuig_id' => 'required|exists:voertuigen,id',
         ]);
-
+    
+        $beschikbaarheid = Beschikbaarheid::findOrFail($id);
         $beschikbaarheid->update($validated);
-        return redirect()->route('beschikbaarheden.index')->with('success', 'Beschikbaarheid updated successfully.');
+    
+        return redirect()->route('beschikbaarheden.index')->with('success', 'Beschikbaarheid bijgewerkt.');
     }
+    
 
     public function destroy($id)
     {

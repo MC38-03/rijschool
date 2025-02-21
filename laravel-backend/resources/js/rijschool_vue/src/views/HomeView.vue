@@ -17,7 +17,7 @@
     <section class="section3">
       <h1 class="klein_tarieven_titel">Onze opties op een rijtje</h1>
       <div class="tarieven">
-        <KleinTarieven />
+        <GrootTarieven />
       </div>
     </section>
     <footer class="footer">
@@ -32,7 +32,7 @@ import Home_Ferrari from '../components/Home_Ferrari.vue';
 import ProeflesForm from '../components/ProeflesForm.vue';
 import InfoKaartjes from '../components/InfoKaartjes.vue';
 import InformatieHomepagina from '../components/InformatieHomepagina.vue';
-import KleinTarieven from '../components/KleinTarieven.vue';
+import GrootTarieven from '../components/GrootTarieven.vue';
 import FooterComponent from '../components/FooterComponent.vue';
 
 export default {
@@ -41,7 +41,7 @@ export default {
     ProeflesForm,
     InfoKaartjes,
     InformatieHomepagina,
-    KleinTarieven,
+    GrootTarieven,
     FooterComponent
   }
 }
