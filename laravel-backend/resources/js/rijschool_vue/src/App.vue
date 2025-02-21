@@ -1,7 +1,7 @@
 <template>
   <header>
     <nav class="navbar">
-      <div class="dropdown invisible-dropdown">
+      <div class="dropdown invisible-dropdown" v-if="!isAuthenticated">
         <button class="dropdown-btn">Login/Register</button>
         <div class="dropdown-content">
           <RouterLink to="/login">Login</RouterLink>
@@ -25,20 +25,30 @@
       </div>
 
       <div class="new-link-right">
+        <!-- Show Dashboard and Logout if Authenticated -->
         <RouterLink v-if="isAuthenticated" to="/dashboard" class="btn-dashboard">Dashboard</RouterLink>
-        <div class="dropdown">
+        <div class="dropdown" v-if="isAuthenticated">
+          <button class="dropdown-btn">Account</button>
+          <div class="dropdown-content">
+            <a @click.prevent="logout">Logout</a>
+          </div>
+        </div>
+
+        <!-- Show Login/Register for Unauthenticated Users -->
+        <div class="dropdown" v-else>
           <button class="dropdown-btn">Login/Register</button>
           <div class="dropdown-content">
             <RouterLink to="/login">Login</RouterLink>
             <RouterLink to="/register">Register</RouterLink>
-            <a v-if="isAuthenticated" @click.prevent="logout">Logout</a>
           </div>
         </div>
       </div>
     </nav>
   </header>
+
   <RouterView />
 </template>
+
 
 <script>
 import { ref, onMounted } from 'vue';
@@ -54,19 +64,30 @@ export default {
     const logout = async () => {
       try {
         await api.post('/logout');  // Call logout API provided by Breeze
+        localStorage.removeItem('authToken');  // Remove token from storage
         isAuthenticated.value = false;
         router.push('/login');  // Redirect to login page after logout
-        alert("Logged out")
+        alert("Logged out successfully!");
       } catch (error) {
         console.error('Logout failed:', error);
       }
     };
 
     onMounted(async () => {
-      try {
-        const response = await api.get('/api/user');
-        isAuthenticated.value = !!response.data;  // If there's a user, the user is authenticated
-      } catch (error) {
+      // Check if token exists in localStorage
+      const token = localStorage.getItem('authToken');
+      isAuthenticated.value = !!token;
+
+      // Verify token via API
+      if (token) {
+        try {
+          const response = await api.get('/api/user');
+          isAuthenticated.value = !!response.data; // Valid user means authenticated
+        } catch (error) {
+          console.error('User verification failed:', error);
+          isAuthenticated.value = false;
+        }
+      } else {
         isAuthenticated.value = false;
       }
     });
@@ -78,6 +99,7 @@ export default {
   },
 };
 </script>
+
 
 <style scoped>
 * {

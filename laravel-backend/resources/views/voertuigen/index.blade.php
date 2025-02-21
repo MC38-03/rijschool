@@ -19,7 +19,7 @@
                     <td>{{ $voertuig->type }}</td>
                     <td>{{ $voertuig->license_plate }}</td>
                     <td class="table-actions">
-                        <a href="{{ route('voertuigen.edit', $voertuig->id) }}" class="btn btn-edit">Wijzig</a>
+                        <a href="{{ route('voertuigen.edit', $voertuig->id) }}" class="btn btn-edit">Edit</a>
                         <form action="{{ route('voertuigen.destroy', $voertuig->id) }}" method="POST"
                             style="display:inline;">
                             @csrf

@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>New Test Drive Request</title>
+    <title>Nieuwe Proefles Aanvraag</title>
 </head>
 <body>
-    <h1>New Test Drive Request</h1>
-    <p><strong>Name:</strong> {{ $data['name'] }}</p>
-    <p><strong>Surname:</strong> {{ $data['surname'] }}</p>
-    <p><strong>Email:</strong> {{ $data['email'] }}</p>
-    <p><strong>Message:</strong></p>
-    <p>{{ $data['message'] }}</p>
+    <h1>Nieuwe Proefles Aanvraag</h1>
+    <p><strong>Naam:</strong> {{ $data['name'] }} {{ $data['surname'] }}</p>
+    <p><strong>E-mail:</strong> {{ $data['email'] }}</p>
+    <p><strong>Bericht:</strong> {{ $data['message'] }}</p>
 </body>
 </html>

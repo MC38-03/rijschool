@@ -110,3 +110,16 @@ Route::get('/{any}', function () {
 Route::get('/{any}', function () {
     return view('app');
 })->where('any', '.*'); 
+
+Route::post('/lessen/check-availability', [App\Http\Controllers\LesController::class, 'checkAvailability'])->name('lessen.checkAvailability');
+
+Route::get('/api/instructor-vehicles/{id}', function ($id) {
+    $voertuigen = App\Models\Beschikbaarheid::where('instructeur_id', $id)
+                    ->with('voertuig')
+                    ->get()
+                    ->pluck('voertuig')
+                    ->unique('id')
+                    ->values();
+    return response()->json($voertuigen);
+});
+

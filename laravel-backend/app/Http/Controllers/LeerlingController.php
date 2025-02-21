@@ -7,11 +7,21 @@ use Illuminate\Http\Request;
 
 class LeerlingController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $leerlingen = User::all();
+        $search = $request->input('search');
+    
+        $leerlingen = User::query()
+            ->when($search, function ($query, $search) {
+                return $query->where('naam', 'like', "%{$search}%")
+                             ->orWhere('achternaam', 'like', "%{$search}%")
+                             ->orWhere('email', 'like', "%{$search}%");
+            })
+            ->paginate(10); // Add pagination
+    
         return view('leerlingen.index', compact('leerlingen'));
     }
+    
 
     public function create()
     {

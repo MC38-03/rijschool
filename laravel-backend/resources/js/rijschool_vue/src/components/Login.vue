@@ -19,6 +19,7 @@ const loginUser = async () => {
 
     // Store token in localStorage or sessionStorage
     localStorage.setItem('authToken', response.data.token)
+    window.localStorage.setItem('isAuthenticated', 'true');
 
     // Reload the page to update authentication state
     window.location.href = '/dashboard'
