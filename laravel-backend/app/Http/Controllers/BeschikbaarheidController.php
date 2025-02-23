@@ -21,7 +21,7 @@ class BeschikbaarheidController extends Controller
         $voertuigen = Voertuig::all();
         return view('beschikbaarheden.create', compact('instructeurs', 'voertuigen'));
     }
-    
+
 
     public function store(Request $request)
     {
@@ -32,15 +32,16 @@ class BeschikbaarheidController extends Controller
             'instructeur_id' => 'required|exists:instructeurs,id',
             'voertuig_id' => 'required|exists:voertuigen,id',
         ]);
-    
+
         Beschikbaarheid::create($validated);
-    
-        return redirect()->route('beschikbaarheden.index')->with('success', 'Beschikbaarheid toegevoegd.');
+
+        return redirect()->route('beschikbaarheden.index')->with('success', 'Beschikbaarheid succesvol toegevoegd!');
     }
-    
+
 
     public function show($id)
-    {        $beschikbaarheid = Beschikbaarheid::with('instructeur')->findOrFail($id);
+    {
+        $beschikbaarheid = Beschikbaarheid::with('instructeur')->findOrFail($id);
         return view('beschikbaarheden.show', compact('beschikbaarheid'));
     }
 
@@ -51,7 +52,7 @@ class BeschikbaarheidController extends Controller
         $voertuigen = Voertuig::all();
         return view('beschikbaarheden.edit', compact('beschikbaarheid', 'instructeurs', 'voertuigen'));
     }
-    
+
 
     public function update(Request $request, $id)
     {
@@ -62,13 +63,13 @@ class BeschikbaarheidController extends Controller
             'instructeur_id' => 'required|exists:instructeurs,id',
             'voertuig_id' => 'required|exists:voertuigen,id',
         ]);
-    
+
         $beschikbaarheid = Beschikbaarheid::findOrFail($id);
         $beschikbaarheid->update($validated);
-    
+
         return redirect()->route('beschikbaarheden.index')->with('success', 'Beschikbaarheid bijgewerkt.');
     }
-    
+
 
     public function destroy($id)
     {

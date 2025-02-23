@@ -12,18 +12,19 @@ use App\Http\Controllers\FactuurController;
 use App\Http\Controllers\BeschikbaarheidController;
 use App\Http\Controllers\TestDriveController;
 
-
-// Authentication routes (login, register, logout)
+// 🔐 Authentication routes (login, register, logout)
 Route::post('/login', function (Request $request) {
     $credentials = $request->validate([
         'gebruikersnaam' => ['required', 'string'],
         'wachtwoord' => ['required', 'string'],
     ]);
 
-    if (Auth::attempt([
+    if (
+        Auth::attempt([
             'gebruikersnaam' => $credentials['gebruikersnaam'],
             'password' => $credentials['wachtwoord'],
-        ])) {
+        ])
+    ) {
         $request->session()->regenerate();
 
         return response()->json([
@@ -79,16 +80,17 @@ Route::post('/logout', function (Request $request) {
     ]);
 });
 
+// 📋 Dashboard route
 Route::get('/dashboard', function () {
     return view('app');
 })->where('any', '.*');
 
-
+// 🔒 Admin-only routes for managing users
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/leerlingen', [LeerlingController::class, 'index'])->name('leerlingen.index');
 });
 
-
+// 📅 Resource routes for availability, lessons, vehicles, instructors
 Route::resource('beschikbaarheden', BeschikbaarheidController::class);
 Route::resource('leerlingen', LeerlingController::class);
 Route::resource('lessen', LesController::class);
@@ -96,30 +98,43 @@ Route::resource('voertuigen', VoertuigController::class);
 Route::resource('instructeurs', InstructeurController::class);
 Route::resource('facturen', FactuurController::class);
 
+// 🔐 Authenticated student-specific routes
 Route::middleware('auth')->group(function () {
     Route::get('/student/schedule', [LesController::class, 'studentSchedule'])->name('student.schedule');
 });
 
+// 📧 Sending test drive email
 Route::post('/send-test-drive-email', [TestDriveController::class, 'sendRequestEmail']);
 
+// 💳 Payment routes (Laravel handles these before Vue Router!)
+Route::get('/facturen/{id}/payment', [FactuurController::class, 'showPayment'])->name('facturen.payment');
+Route::post('/facturen/{id}/confirm', [FactuurController::class, 'confirmPayment'])->name('facturen.confirm');
+Route::post('/facturen/{id}/pay', [FactuurController::class, 'pay'])->name('facturen.pay');
 
-Route::get('/{any}', function () {
-    return view('app');
-})->where('any', '^(?!admin|beschikbaarheden|leerlingen|lessen|voertuigen|facturen|instructeurs).*$');
+// 🧾 Facturen (Invoice) routes
+Route::middleware('auth')->group(function () {
+    Route::get('/facturen', [FactuurController::class, 'index'])->name('facturen.index');
+});
 
-Route::get('/{any}', function () {
-    return view('app');
-})->where('any', '.*'); 
-
-Route::post('/lessen/check-availability', [App\Http\Controllers\LesController::class, 'checkAvailability'])->name('lessen.checkAvailability');
-
+// 🚗 API route for fetching instructor vehicles
 Route::get('/api/instructor-vehicles/{id}', function ($id) {
     $voertuigen = App\Models\Beschikbaarheid::where('instructeur_id', $id)
-                    ->with('voertuig')
-                    ->get()
-                    ->pluck('voertuig')
-                    ->unique('id')
-                    ->values();
+        ->with('voertuig')
+        ->get()
+        ->pluck('voertuig')
+        ->unique('id')
+        ->values();
     return response()->json($voertuigen);
 });
 
+// 💼 Create availability route
+Route::post('/beschikbaarheden/store', [BeschikbaarheidController::class, 'store'])->name('beschikbaarheden.store');
+
+// 🔄 Lesson availability checker
+Route::post('/lessen/check-availability', [App\Http\Controllers\LesController::class, 'checkAvailability'])->name('lessen.checkAvailability');
+
+// 🔁 Vue Router fallback route (only if nothing else matches)
+// This should be LAST!
+Route::get('/{any}', function () {
+    return view('app');
+})->where('any', '^(?!admin|beschikbaarheden|leerlingen|lessen|voertuigen|facturen|instructeurs).*$');

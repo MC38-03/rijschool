@@ -14,7 +14,7 @@
         </div>
     </form>
 
-    <a href="{{ route('leerlingen.create') }}" class="addbutton btn btn-primary mb-3">Voeg nieuw leerling toe</a>
+    <a style="padding: 5px;" href="{{ route('leerlingen.create') }}" class="addbutton btn btn-primary mb-3">Voeg nieuw leerling toe</a>
 
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -40,7 +40,7 @@
                     <td class="table-actions">
                         <a href="{{ route('leerlingen.show', $leerling->id) }}" class="btn btn-view">View</a>
                         <a href="{{ route('leerlingen.edit', $leerling->id) }}" class="btn btn-edit">Edit</a>
-                        <form action="{{ route('leerlingen.destroy', $leerling->id) }}" method="POST" style="display:inline;">
+                        <form style="padding: 0;" action="{{ route('leerlingen.destroy', $leerling->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-delete">Verwijder</button>

@@ -49,7 +49,7 @@ export default {
       window.location.href = '/facturen';
     },
     bookLesson() {
-      window.location.href = '/lessen/create';
+      window.location.href = '/lessen';
     }
 }
 };

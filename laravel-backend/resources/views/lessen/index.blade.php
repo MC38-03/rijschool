@@ -50,24 +50,28 @@
                                 @foreach ($weekDays as $day)
                                     <td class="align-middle">
                                         @php
-                                            $availableLessons = $beschikbaarheden->where('datum', $day)->filter(function ($lesson) use ($timeSlot) {
-                                                return $lesson->begin_tijd <= $timeSlot && $lesson->eind_tijd > $timeSlot;
+                                            $availableLessons = $beschikbaarheden->where('datum', $day)->filter(function ($les) use ($timeSlot) {
+                                                return $les->begin_tijd <= $timeSlot && $les->eind_tijd > $timeSlot;
                                             });
 
                                             $groupedLessons = $availableLessons->groupBy('instructeur_id');
-                                            $isBooked = $bookedLessons->where('datum', $day)
-                                                ->where('begin_tijd', '<=', $timeSlot)
-                                                ->where('eind_tijd', '>', $timeSlot)
-                                                ->isNotEmpty();
-
-                                            $disabledAttr = $isBooked ? 'disabled' : '';
-                                            $buttonClass = $isBooked ? 'btn-secondary disabled' : 'btn-success';
-                                            $statusText = $isBooked ? 'Geboekt' : 'Beschikbaar';
                                         @endphp
 
                                         @if ($groupedLessons->isNotEmpty())
                                             @foreach ($groupedLessons as $lessons)
-                                                @php $lesson = $lessons->first(); @endphp
+                                                @php
+                                                    $lesson = $lessons->first();
+                                                    $isGeboekt = $bookedLessons->where('datum', $day)
+                                                        ->where('instructeur_id', $lesson->instructeur_id)
+                                                        ->where('begin_tijd', '<=', $timeSlot)
+                                                        ->where('eind_tijd', '>', $timeSlot)
+                                                        ->isNotEmpty();
+
+                                                    $disabledAttr = $isGeboekt ? 'disabled' : '';
+                                                    $buttonClass = $isGeboekt ? 'btn-secondary disabled' : 'btn-success';
+                                                    $statusText = $isGeboekt ? 'Geboekt' : 'Beschikbaar';
+                                                @endphp
+
                                                 <button 
                                                     class="btn {{ $buttonClass }} book-lesson mb-2 w-100"
                                                     data-date="{{ $day }}"
@@ -112,6 +116,11 @@
                     <input type="hidden" name="instructeur_id" id="selectedInstructorId">
                     <input type="hidden" name="leerling_id" id="selectedStudentId" value="{{ auth()->user()->id }}">
                     <input type="hidden" name="voertuig_id" id="selectedVehicleId">
+
+                    <div class="form-check mt-2">
+                        <label class="form-check-label" for="sendEmailCheckbox">Ontvang een bevestigingsmail</label>
+                        <input type="checkbox" class="form-check-input" id="sendEmailCheckbox" name="send_email" checked>
+                    </div>
 
                     <button type="submit" class="btn btn-primary">Bevestigen</button>
                 </form>
