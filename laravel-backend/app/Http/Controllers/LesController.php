@@ -16,8 +16,6 @@ use App\Models\Beschikbaarheid;
 class LesController extends Controller
 {
 
-
-
     public function checkAvailability(Request $request)
     {
         $request->validate([
@@ -54,36 +52,40 @@ class LesController extends Controller
         return response()->json(['available' => true]);
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
 
-        $lessen = Les::where('leerling_id', $user->id)
-            ->orWhere('instructeur_id', $user->id)
-            ->with(['leerling', 'instructeur', 'voertuig'])
-            ->get();
+        // Step 1: Get week offset from the request
+        $weekOffset = $request->input('week_offset', 0);
 
-        $instructeurs = Instructeur::all();
+        // Step 2: Generate current week's days dynamically with offset
+        $startOfWeek = now()->startOfWeek()->addWeeks($weekOffset);
+        $endOfWeek = $startOfWeek->copy()->endOfWeek();
 
-        // Generate current week's days dynamically
-        $startOfWeek = now()->startOfWeek();
         $weekDays = [];
         for ($i = 0; $i < 7; $i++) {
             $weekDays[] = $startOfWeek->copy()->addDays($i)->format('Y-m-d');
         }
 
-        // Get available lesson slots based on beschikbaarheden
-        $beschikbaarheden = Beschikbaarheid::with('instructeur', 'voertuig')
-            ->whereIn('datum', $weekDays)
+        // Step 3: Fetch lessons related to the current user
+        $lessen = Les::where('leerling_id', $user->id)
+            ->orWhere('instructeur_id', $user->id)
+            ->with(['leerling', 'instructeur', 'voertuig'])
             ->get();
 
-        // Extract unique available time slots from beschikbaarheden
-        $timeSlots = $beschikbaarheden->pluck('begin_tijd')->unique()->sort()->values()->all();
+        // Step 4: Get all instructors
+        $instructeurs = Instructeur::all();
 
-        // Fetch all existing bookings (including old ones)
-        $bookedLessons = Les::whereIn('datum', $weekDays)->get();
+        // Step 5: Fetch available slots (beschikbaarheden) based on the selected week
+        $beschikbaarheden = Beschikbaarheid::with('instructeur', 'voertuig')
+            ->whereBetween('datum', [$startOfWeek, $endOfWeek])
+            ->get();
 
-        // Mark booked slots
+        // Step 6: Fetch all bookings for the current week
+        $bookedLessons = Les::whereBetween('datum', [$startOfWeek, $endOfWeek])->get();
+
+        // Step 7: Prepare available slots and their booking status
         $slots = [];
         foreach ($beschikbaarheden as $beschikbaarheid) {
             $isBooked = Les::where('instructeur_id', $beschikbaarheid->instructeur_id)
@@ -103,11 +105,17 @@ class LesController extends Controller
             ];
         }
 
-        return view('lessen.index', compact('lessen', 'instructeurs', 'weekDays', 'slots', 'beschikbaarheden', 'bookedLessons'));
-
+        // Step 8: Return the view with week offset to maintain the current state
+        return view('lessen.index', compact(
+            'lessen',
+            'instructeurs',
+            'weekDays',
+            'slots',
+            'beschikbaarheden',
+            'bookedLessons',
+            'weekOffset'
+        ));
     }
-
-
 
 
     public function studentSchedule()
@@ -171,19 +179,13 @@ class LesController extends Controller
         // Create the lesson if everything is valid
         $les = Les::create($validated);
 
-        // Send confirmation email if the leerling exists
-        if ($les->leerling) {
-            Mail::to($les->leerling->email)->send(new LessonNotification($les, 'created'));
-        }
-
+        // send email to leerling if requested
         if ($request->has('send_email') && $les->leerling) {
             Mail::to($les->leerling->email)->send(new LessonNotification($les, 'created'));
         }
 
         return redirect()->route('lessen.index')->with('success', 'Les succesvol geboekt!');
     }
-
-
 
     public function show($id)
     {
@@ -199,7 +201,6 @@ class LesController extends Controller
         $voertuigen = Voertuig::all();
         return view('lessen.edit', compact('les', 'instructeurs', 'leerlingen', 'voertuigen'));
     }
-
 
     public function update(Request $request, $id)
     {

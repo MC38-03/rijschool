@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h1>Mijn rooster</h1>
-    <a href="{{ route('lessen.create') }}" class="addbutton btn btn-primary mb-3">Plan een nieuwe les in</a>
+    <a href="/lessen" class="addbutton btn btn-primary mb-3">Plan een nieuwe les in</a>
 
     <table class="table mt-4">
         <thead>
